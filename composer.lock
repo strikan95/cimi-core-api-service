@@ -4,8 +4,263 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47781ea21df99dc1da2ea62b1ebb0dd4",
+    "content-hash": "8a029d56efa01359a6082ff6e43baea1",
     "packages": [
+        {
+            "name": "auth0/auth0-php",
+            "version": "8.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/auth0/auth0-PHP.git",
+                "reference": "b5bccf1726d8c94f2b1ef5e8250ddc070aed2442"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/b5bccf1726d8c94f2b1ef5e8250ddc070aed2442",
+                "reference": "b5bccf1726d8c94f2b1ef5e8250ddc070aed2442",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-openssl": "*",
+                "php": "^8.0",
+                "php-http/multipart-stream-builder": "^1.2",
+                "psr-discovery/all": "^1.0",
+                "psr/http-client-implementation": "^1.0",
+                "psr/http-factory-implementation": "^1.0",
+                "psr/http-message-implementation": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "psr-mock/http": "^1.0",
+                "rector/rector": "^0.15",
+                "symfony/cache": "^4.4 || ^5.0 || ^6.0",
+                "symfony/event-dispatcher": "^4.0 || ^5.0 || ^6.0",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "suggest": {
+                "psr/cache-implementation": "(PSR-6 Cache) Improve performance by avoiding making redundant network requests.",
+                "psr/event-dispatcher-implementation": "(PSR-14 Event Dispatcher) Observe and react to events when they occur."
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Auth0\\SDK\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Auth0",
+                    "email": "support@auth0.com",
+                    "homepage": "https://auth0.com/"
+                }
+            ],
+            "description": "PHP SDK for Auth0 Authentication and Management APIs.",
+            "homepage": "https://github.com/auth0/auth0-PHP",
+            "keywords": [
+                "Authentication",
+                "JSON Web Token",
+                "JWK",
+                "OpenId",
+                "api",
+                "auth",
+                "auth0",
+                "authorization",
+                "json web key",
+                "jwt",
+                "login",
+                "oauth",
+                "protect",
+                "secure"
+            ],
+            "support": {
+                "issues": "https://github.com/auth0/auth0-PHP/issues",
+                "source": "https://github.com/auth0/auth0-PHP/tree/8.5.0"
+            },
+            "time": "2023-03-27T22:12:30+00:00"
+        },
+        {
+            "name": "auth0/symfony",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:auth0/symfony.git",
+                "reference": "9dd91a817705ce37980aa4c2b69892fe23906dd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/auth0/symfony/zipball/9dd91a817705ce37980aa4c2b69892fe23906dd1",
+                "reference": "9dd91a817705ce37980aa4c2b69892fe23906dd1",
+                "shasum": ""
+            },
+            "require": {
+                "auth0/auth0-php": "^8.0",
+                "php": "^8.1",
+                "symfony/cache": "^6.1",
+                "symfony/framework-bundle": "^6.1",
+                "symfony/security-bundle": "^6.1"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.28",
+                "firebase/php-jwt": "^6.3",
+                "hyperf/event": "^2.2",
+                "laravel/pint": "^1.2",
+                "mockery/mockery": "^1.5",
+                "nyholm/psr7": "^1.5",
+                "pestphp/pest": "^1.21",
+                "php-http/mock-client": "^1.5",
+                "phpstan/phpstan": "^1.9",
+                "phpstan/phpstan-strict-rules": "^1.4.4",
+                "phpunit/phpunit": "^9.5",
+                "rector/rector": "^0.14.7",
+                "squizlabs/php_codesniffer": "^3.7",
+                "vimeo/psalm": "^4.30",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Auth0\\Symfony\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Auth0",
+                    "email": "support@auth0.com",
+                    "homepage": "https://auth0.com/"
+                }
+            ],
+            "description": "Symfony SDK for Auth0 Authentication and Management APIs.",
+            "homepage": "https://github.com/auth0/symfony",
+            "keywords": [
+                "Authentication",
+                "JSON Web Token",
+                "JWK",
+                "OpenId",
+                "api",
+                "auth",
+                "auth0",
+                "authorization",
+                "json web key",
+                "jwt",
+                "login",
+                "oauth",
+                "protect",
+                "secure",
+                "symfony"
+            ],
+            "time": "2023-01-10T04:29:09+00:00"
+        },
+        {
+            "name": "composer/semver",
+            "version": "3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/semver.git",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/semver/zipball/3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.2 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.4",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Semver\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nils Adermann",
+                    "email": "naderman@naderman.de",
+                    "homepage": "http://www.naderman.de"
+                },
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                },
+                {
+                    "name": "Rob Bast",
+                    "email": "rob.bast@gmail.com",
+                    "homepage": "http://robbast.nl"
+                }
+            ],
+            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "keywords": [
+                "semantic",
+                "semver",
+                "validation",
+                "versioning"
+            ],
+            "support": {
+                "irc": "irc://irc.freenode.org/composer",
+                "issues": "https://github.com/composer/semver/issues",
+                "source": "https://github.com/composer/semver/tree/3.3.2"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-04-01T19:23:25+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "2.0.1",
@@ -158,6 +413,196 @@
                 }
             ],
             "time": "2022-12-15T16:57:16+00:00"
+        },
+        {
+            "name": "php-http/discovery",
+            "version": "1.15.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/discovery.git",
+                "reference": "3ccd28dd9fb34b52db946abea1b538568e34eae8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/3ccd28dd9fb34b52db946abea1b538568e34eae8",
+                "reference": "3ccd28dd9fb34b52db946abea1b538568e34eae8",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0|^2.0",
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "nyholm/psr7": "<1.0"
+            },
+            "provide": {
+                "php-http/async-client-implementation": "*",
+                "php-http/client-implementation": "*",
+                "psr/http-client-implementation": "*",
+                "psr/http-factory-implementation": "*",
+                "psr/http-message-implementation": "*"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0.2|^2.0",
+                "graham-campbell/phpspec-skip-example-extension": "^5.0",
+                "php-http/httplug": "^1.0 || ^2.0",
+                "php-http/message-factory": "^1.0",
+                "phpspec/phpspec": "^5.1 || ^6.1 || ^7.3",
+                "symfony/phpunit-bridge": "^6.2"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Http\\Discovery\\Composer\\Plugin",
+                "plugin-optional": true
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Discovery\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Finds and installs PSR-7, PSR-17, PSR-18 and HTTPlug implementations",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "adapter",
+                "client",
+                "discovery",
+                "factory",
+                "http",
+                "message",
+                "psr17",
+                "psr7"
+            ],
+            "support": {
+                "issues": "https://github.com/php-http/discovery/issues",
+                "source": "https://github.com/php-http/discovery/tree/1.15.3"
+            },
+            "time": "2023-03-31T14:40:37+00:00"
+        },
+        {
+            "name": "php-http/message-factory",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/message-factory.git",
+                "reference": "a478cb11f66a6ac48d8954216cfed9aa06a501a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/message-factory/zipball/a478cb11f66a6ac48d8954216cfed9aa06a501a1",
+                "reference": "a478cb11f66a6ac48d8954216cfed9aa06a501a1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Márk Sági-Kazár",
+                    "email": "mark.sagikazar@gmail.com"
+                }
+            ],
+            "description": "Factory interfaces for PSR-7 HTTP Message",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "stream",
+                "uri"
+            ],
+            "support": {
+                "issues": "https://github.com/php-http/message-factory/issues",
+                "source": "https://github.com/php-http/message-factory/tree/master"
+            },
+            "time": "2015-12-19T14:08:53+00:00"
+        },
+        {
+            "name": "php-http/multipart-stream-builder",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-http/multipart-stream-builder.git",
+                "reference": "11c1d31f72e01c738bbce9e27649a7cca829c30e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-http/multipart-stream-builder/zipball/11c1d31f72e01c738bbce9e27649a7cca829c30e",
+                "reference": "11c1d31f72e01c738bbce9e27649a7cca829c30e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "php-http/discovery": "^1.7",
+                "php-http/message-factory": "^1.0.2",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^1.0",
+                "php-http/message": "^1.5",
+                "phpunit/phpunit": "^7.5.15 || ^8.5 || ^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Http\\Message\\MultipartStream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "A builder class that help you create a multipart stream",
+            "homepage": "http://php-http.org",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "multipart stream",
+                "stream"
+            ],
+            "support": {
+                "issues": "https://github.com/php-http/multipart-stream-builder/issues",
+                "source": "https://github.com/php-http/multipart-stream-builder/tree/1.2.0"
+            },
+            "time": "2021-05-21T08:32:01+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -370,6 +815,603 @@
             "time": "2023-02-07T18:11:17+00:00"
         },
         {
+            "name": "psr-discovery/all",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/all.git",
+                "reference": "73deceb26d3190f53a5cd3b95751c6a223804a8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/all/zipball/73deceb26d3190f53a5cd3b95751c6a223804a8b",
+                "reference": "73deceb26d3190f53a5cd3b95751c6a223804a8b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "psr-discovery/cache-implementations": "^1.0",
+                "psr-discovery/container-implementations": "^1.0",
+                "psr-discovery/event-dispatcher-implementations": "^1.0",
+                "psr-discovery/http-client-implementations": "^1.0",
+                "psr-discovery/http-factory-implementations": "^1.0",
+                "psr-discovery/log-implementations": "^1.0"
+            },
+            "type": "metapackage",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery",
+            "keywords": [
+                "PSR-11",
+                "discovery",
+                "psr",
+                "psr-14",
+                "psr-17",
+                "psr-18",
+                "psr-3",
+                "psr-6"
+            ],
+            "support": {
+                "source": "https://github.com/psr-discovery/all/tree/1.0.0"
+            },
+            "time": "2023-03-27T16:37:46+00:00"
+        },
+        {
+            "name": "psr-discovery/cache-implementations",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/cache-implementations.git",
+                "reference": "33b63d8e324f4aff296508b592bbd4d71b45da68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/cache-implementations/zipball/33b63d8e324f4aff296508b592bbd4d71b45da68",
+                "reference": "33b63d8e324f4aff296508b592bbd4d71b45da68",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "psr-discovery/discovery": "^1.0",
+                "psr/cache": "^1.0 | ^2.0 | ^3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "rector/rector": "^0.15",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR-6 Cache implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery",
+            "keywords": [
+                "cache",
+                "cache-implementation",
+                "discovery",
+                "psr",
+                "psr-6"
+            ],
+            "support": {
+                "issues": "https://github.com/psr-discovery/cache-implementations/issues",
+                "source": "https://github.com/psr-discovery/cache-implementations/tree/1.0.0"
+            },
+            "time": "2023-03-27T06:19:44+00:00"
+        },
+        {
+            "name": "psr-discovery/container-implementations",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/container-implementations.git",
+                "reference": "366612e9260f247d8b8ee279094a33dd4cbc6886"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/container-implementations/zipball/366612e9260f247d8b8ee279094a33dd4cbc6886",
+                "reference": "366612e9260f247d8b8ee279094a33dd4cbc6886",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "psr-discovery/discovery": "^1.0",
+                "psr/container": "^1.0 | ^2.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "rector/rector": "^0.15",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR-11 Container implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery/http-client-implementations",
+            "keywords": [
+                "PSR-11",
+                "discovery",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/psr-discovery/container-implementations/issues",
+                "source": "https://github.com/psr-discovery/container-implementations/tree/1.0.0"
+            },
+            "time": "2023-03-27T06:18:27+00:00"
+        },
+        {
+            "name": "psr-discovery/discovery",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/discovery.git",
+                "reference": "83e746a138705d56f8e3dc102e28c79f32ae9b54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/discovery/zipball/83e746a138705d56f8e3dc102e28c79f32ae9b54",
+                "reference": "83e746a138705d56f8e3dc102e28c79f32ae9b54",
+                "shasum": ""
+            },
+            "require": {
+                "composer/semver": "^3.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "rector/rector": "^0.15",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR implementations by searching for a list of well-known classes that implement the relevant interfaces, and returning an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery/discovery",
+            "keywords": [
+                "PSR-11",
+                "discovery",
+                "psr",
+                "psr-14",
+                "psr-17",
+                "psr-18",
+                "psr-3",
+                "psr-6"
+            ],
+            "support": {
+                "issues": "https://github.com/psr-discovery/discovery/issues",
+                "source": "https://github.com/psr-discovery/discovery/tree/1.0.2"
+            },
+            "time": "2023-03-27T19:49:39+00:00"
+        },
+        {
+            "name": "psr-discovery/event-dispatcher-implementations",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/event-dispatcher-implementations.git",
+                "reference": "903d05afe29bd1a17c18924004d282d28bda1759"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/event-dispatcher-implementations/zipball/903d05afe29bd1a17c18924004d282d28bda1759",
+                "reference": "903d05afe29bd1a17c18924004d282d28bda1759",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "psr-discovery/discovery": "^1.0",
+                "psr/event-dispatcher": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "rector/rector": "^0.15",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR-14 Event Dispatcher implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery/http-client-implementations",
+            "keywords": [
+                "discovery",
+                "psr",
+                "psr-18"
+            ],
+            "support": {
+                "issues": "https://github.com/psr-discovery/event-dispatcher-implementations/issues",
+                "source": "https://github.com/psr-discovery/event-dispatcher-implementations/tree/1.0.0"
+            },
+            "time": "2023-03-27T06:17:31+00:00"
+        },
+        {
+            "name": "psr-discovery/http-client-implementations",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/http-client-implementations.git",
+                "reference": "ca0cbc370789a3fd0f6aa3e7c4f4e5c123eadef3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/http-client-implementations/zipball/ca0cbc370789a3fd0f6aa3e7c4f4e5c123eadef3",
+                "reference": "ca0cbc370789a3fd0f6aa3e7c4f4e5c123eadef3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "psr-discovery/discovery": "^1.0",
+                "psr/http-client": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "rector/rector": "^0.15",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR-18 HTTP Client implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery/http-client-implementations",
+            "keywords": [
+                "discovery",
+                "psr",
+                "psr-18"
+            ],
+            "support": {
+                "issues": "https://github.com/psr-discovery/http-client-implementations/issues",
+                "source": "https://github.com/psr-discovery/http-client-implementations/tree/1.0.0"
+            },
+            "time": "2023-03-27T06:16:24+00:00"
+        },
+        {
+            "name": "psr-discovery/http-factory-implementations",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/http-factory-implementations.git",
+                "reference": "c88941dd01aac0696eaf03250fbaf85ba2251ba5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/http-factory-implementations/zipball/c88941dd01aac0696eaf03250fbaf85ba2251ba5",
+                "reference": "c88941dd01aac0696eaf03250fbaf85ba2251ba5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "psr-discovery/discovery": "^1.0",
+                "psr/http-factory": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "rector/rector": "^0.15",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR-17 HTTP Factory implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery/http-factory-implementations",
+            "keywords": [
+                "discovery",
+                "psr",
+                "psr-18"
+            ],
+            "support": {
+                "issues": "https://github.com/psr-discovery/http-factory-implementations/issues",
+                "source": "https://github.com/psr-discovery/http-factory-implementations/tree/1.0.0"
+            },
+            "time": "2023-03-27T06:15:03+00:00"
+        },
+        {
+            "name": "psr-discovery/log-implementations",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/psr-discovery/log-implementations.git",
+                "reference": "7be7af9bb1bf41a4985356b16cc654e0227eed38"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/psr-discovery/log-implementations/zipball/7be7af9bb1bf41a4985356b16cc654e0227eed38",
+                "reference": "7be7af9bb1bf41a4985356b16cc654e0227eed38",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "psr-discovery/discovery": "^1.0",
+                "psr/log": "^1.0 | ^2.0 | ^3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "infection/infection": "^0.26",
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "rector/rector": "^0.15",
+                "vimeo/psalm": "^5.8",
+                "wikimedia/composer-merge-plugin": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "merge-plugin": {
+                    "ignore-duplicates": false,
+                    "include": [
+                        "composer.local.json"
+                    ],
+                    "merge-dev": true,
+                    "merge-extra": false,
+                    "merge-extra-deep": false,
+                    "merge-scripts": false,
+                    "recurse": true,
+                    "replace": true
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PsrDiscovery\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Evan Sims",
+                    "email": "hello@evansims.com",
+                    "homepage": "https://evansims.com/"
+                }
+            ],
+            "description": "Lightweight library that discovers available PSR-3 Log implementations by searching for a list of well-known classes that implement the relevant interface, and returns an instance of the first one that is found.",
+            "homepage": "https://github.com/psr-discovery",
+            "keywords": [
+                "discovery",
+                "log",
+                "log-implementation",
+                "psr",
+                "psr-3"
+            ],
+            "support": {
+                "issues": "https://github.com/psr-discovery/log-implementations/issues",
+                "source": "https://github.com/psr-discovery/log-implementations/tree/1.0.0"
+            },
+            "time": "2023-03-27T06:14:11+00:00"
+        },
+        {
             "name": "psr/cache",
             "version": "3.0.0",
             "source": {
@@ -520,6 +1562,166 @@
                 "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
             },
             "time": "2019-01-08T18:20:26+00:00"
+        },
+        {
+            "name": "psr/http-client",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-client.git",
+                "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-client/zipball/2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
+                "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0",
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP clients",
+            "homepage": "https://github.com/php-fig/http-client",
+            "keywords": [
+                "http",
+                "http-client",
+                "psr",
+                "psr-18"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/http-client/tree/master"
+            },
+            "time": "2020-06-29T06:28:15+00:00"
+        },
+        {
+            "name": "psr/http-factory",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-factory.git",
+                "reference": "12ac7fcd07e5b077433f5f2bee95b3a771bf61be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-factory/zipball/12ac7fcd07e5b077433f5f2bee95b3a771bf61be",
+                "reference": "12ac7fcd07e5b077433f5f2bee95b3a771bf61be",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for PSR-7 HTTP message factories",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "psr",
+                "psr-17",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/http-factory/tree/master"
+            },
+            "time": "2019-04-30T12:38:16+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/http-message/tree/master"
+            },
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -1913,6 +3115,78 @@
             "time": "2023-02-28T13:26:41+00:00"
         },
         {
+            "name": "symfony/password-hasher",
+            "version": "v6.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/password-hasher.git",
+                "reference": "67820d8570bf1c2c2cd87cb76d9d12a9d52ab808"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/password-hasher/zipball/67820d8570bf1c2c2cd87cb76d9d12a9d52ab808",
+                "reference": "67820d8570bf1c2c2cd87cb76d9d12a9d52ab808",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "conflict": {
+                "symfony/security-core": "<5.4"
+            },
+            "require-dev": {
+                "symfony/console": "^5.4|^6.0",
+                "symfony/security-core": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\PasswordHasher\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robin Chalas",
+                    "email": "robin.chalas@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides password hashing utilities",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "hashing",
+                "password"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/password-hasher/tree/v6.2.7"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-02-14T08:44:56+00:00"
+        },
+        {
             "name": "symfony/polyfill-intl-grapheme",
             "version": "v1.27.0",
             "source": {
@@ -2574,6 +3848,353 @@
                 }
             ],
             "time": "2023-02-02T07:44:01+00:00"
+        },
+        {
+            "name": "symfony/security-bundle",
+            "version": "v6.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-bundle.git",
+                "reference": "c781ba5ab5f71a5c8bd5fce5b4c8b6ad9eb7f3d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/c781ba5ab5f71a5c8bd5fce5b4c8b6ad9eb7f3d5",
+                "reference": "c781ba5ab5f71a5c8bd5fce5b4c8b6ad9eb7f3d5",
+                "shasum": ""
+            },
+            "require": {
+                "composer-runtime-api": ">=2.1",
+                "ext-xml": "*",
+                "php": ">=8.1",
+                "symfony/config": "^6.1",
+                "symfony/dependency-injection": "^6.2",
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/http-foundation": "^6.2",
+                "symfony/http-kernel": "^6.2",
+                "symfony/password-hasher": "^5.4|^6.0",
+                "symfony/security-core": "^6.2",
+                "symfony/security-csrf": "^5.4|^6.0",
+                "symfony/security-http": "^6.2.6"
+            },
+            "conflict": {
+                "symfony/browser-kit": "<5.4",
+                "symfony/console": "<5.4",
+                "symfony/framework-bundle": "<5.4",
+                "symfony/ldap": "<5.4",
+                "symfony/twig-bundle": "<5.4"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.10.4|^2",
+                "symfony/asset": "^5.4|^6.0",
+                "symfony/browser-kit": "^5.4|^6.0",
+                "symfony/console": "^5.4|^6.0",
+                "symfony/css-selector": "^5.4|^6.0",
+                "symfony/dom-crawler": "^5.4|^6.0",
+                "symfony/expression-language": "^5.4|^6.0",
+                "symfony/form": "^5.4|^6.0",
+                "symfony/framework-bundle": "^5.4|^6.0",
+                "symfony/ldap": "^5.4|^6.0",
+                "symfony/process": "^5.4|^6.0",
+                "symfony/rate-limiter": "^5.4|^6.0",
+                "symfony/serializer": "^5.4|^6.0",
+                "symfony/translation": "^5.4|^6.0",
+                "symfony/twig-bridge": "^5.4|^6.0",
+                "symfony/twig-bundle": "^5.4|^6.0",
+                "symfony/validator": "^5.4|^6.0",
+                "symfony/yaml": "^5.4|^6.0",
+                "twig/twig": "^2.13|^3.0.4"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\SecurityBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides a tight integration of the Security component into the Symfony full-stack framework",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/security-bundle/tree/v6.2.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-03-10T10:06:03+00:00"
+        },
+        {
+            "name": "symfony/security-core",
+            "version": "v6.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-core.git",
+                "reference": "c141337bc7451f9a9e464733f1e536bf38d1d2fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-core/zipball/c141337bc7451f9a9e464733f1e536bf38d1d2fb",
+                "reference": "c141337bc7451f9a9e464733f1e536bf38d1d2fb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/event-dispatcher-contracts": "^1.1|^2|^3",
+                "symfony/password-hasher": "^5.4|^6.0",
+                "symfony/service-contracts": "^1.1.6|^2|^3"
+            },
+            "conflict": {
+                "symfony/event-dispatcher": "<5.4",
+                "symfony/http-foundation": "<5.4",
+                "symfony/ldap": "<5.4",
+                "symfony/security-guard": "<5.4",
+                "symfony/validator": "<5.4"
+            },
+            "require-dev": {
+                "psr/cache": "^1.0|^2.0|^3.0",
+                "psr/container": "^1.1|^2.0",
+                "psr/log": "^1|^2|^3",
+                "symfony/cache": "^5.4|^6.0",
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/expression-language": "^5.4|^6.0",
+                "symfony/http-foundation": "^5.4|^6.0",
+                "symfony/ldap": "^5.4|^6.0",
+                "symfony/translation": "^5.4|^6.0",
+                "symfony/validator": "^5.4|^6.0"
+            },
+            "suggest": {
+                "psr/container-implementation": "To instantiate the Security class",
+                "symfony/event-dispatcher": "",
+                "symfony/expression-language": "For using the expression voter",
+                "symfony/http-foundation": "",
+                "symfony/ldap": "For using LDAP integration",
+                "symfony/validator": "For using the user password constraint"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Security\\Core\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Security Component - Core Library",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/security-core/tree/v6.2.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-03-10T10:06:03+00:00"
+        },
+        {
+            "name": "symfony/security-csrf",
+            "version": "v6.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-csrf.git",
+                "reference": "6cce7efdce68e0670d2f19acebc21dcd0798e333"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-csrf/zipball/6cce7efdce68e0670d2f19acebc21dcd0798e333",
+                "reference": "6cce7efdce68e0670d2f19acebc21dcd0798e333",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/security-core": "^5.4|^6.0"
+            },
+            "conflict": {
+                "symfony/http-foundation": "<5.4"
+            },
+            "require-dev": {
+                "symfony/http-foundation": "^5.4|^6.0"
+            },
+            "suggest": {
+                "symfony/http-foundation": "For using the class SessionTokenStorage."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Security\\Csrf\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Security Component - CSRF Library",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/security-csrf/tree/v6.2.7"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-02-16T09:57:23+00:00"
+        },
+        {
+            "name": "symfony/security-http",
+            "version": "v6.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-http.git",
+                "reference": "6d47056ee9f394aeace1799e73ead5a2107f581d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-http/zipball/6d47056ee9f394aeace1799e73ead5a2107f581d",
+                "reference": "6d47056ee9f394aeace1799e73ead5a2107f581d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.1|^3",
+                "symfony/http-foundation": "^5.4|^6.0",
+                "symfony/http-kernel": "^6.2",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/property-access": "^5.4|^6.0",
+                "symfony/security-core": "~6.0.19|~6.1.11|^6.2.5"
+            },
+            "conflict": {
+                "symfony/event-dispatcher": "<5.4.9|>=6,<6.0.9",
+                "symfony/security-bundle": "<5.4",
+                "symfony/security-csrf": "<5.4"
+            },
+            "require-dev": {
+                "psr/log": "^1|^2|^3",
+                "symfony/cache": "^5.4|^6.0",
+                "symfony/expression-language": "^5.4|^6.0",
+                "symfony/rate-limiter": "^5.4|^6.0",
+                "symfony/routing": "^5.4|^6.0",
+                "symfony/security-csrf": "^5.4|^6.0",
+                "symfony/translation": "^5.4|^6.0"
+            },
+            "suggest": {
+                "symfony/routing": "For using the HttpUtils class to create sub-requests, redirect the user, and match URLs",
+                "symfony/security-csrf": "For using tokens to protect authentication/logout attempts"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Security\\Http\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Security Component - HTTP Integration",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/security-http/tree/v6.2.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-03-10T10:06:03+00:00"
         },
         {
             "name": "symfony/serializer",
