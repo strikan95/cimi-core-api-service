@@ -4,47 +4,74 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 128)]
-    private ?string $email = null;
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $authIdentifier = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $auth_identity = null;
+    #[ORM\Column]
+    private array $roles = [];
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getAuthIdentifier(): ?string
     {
-        return $this->email;
+        return $this->authIdentifier;
     }
 
-    public function setEmail(string $email): self
+    public function setAuthIdentifier(string $identifier): self
     {
-        $this->email = $email;
+        $this->authIdentifier = $identifier;
 
         return $this;
     }
 
-    public function getAuthIdentity(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->auth_identity;
+        return (string) $this->authIdentifier;
     }
 
-    public function setAuthIdentity(?string $auth_identity): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->auth_identity = $auth_identity;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
