@@ -1,5 +1,5 @@
 <?php
-namespace App\tests\Validator\DTO;
+namespace App\Tests\Validator\DTO;
 
 use App\DTO\PropertyListing\PropertyListingInput;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,8 @@ class PropertyListingInputDtoValidationTest extends KernelTestCase
 
 
         $dto = new PropertyListingInput();
-        $dto->title = 'Bla';
+        $dto->title = 'Some title';
+        $dto->description = 'Some description';
         $dto->amenities = [1, 2];
 
         $errors = $validator->validate($dto);

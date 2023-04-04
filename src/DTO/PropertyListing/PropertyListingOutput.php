@@ -6,10 +6,12 @@ use Symfony\Component\Uid\Uuid;
 
 class PropertyListingOutput
 {
-    public ?Uuid $id;
+    public ?int $id;
     public DateTime $createdAt;
 
     public string $title;
 
-    public array $amenities;
+    public string $description;
+
+    public array $amenities = [];
 }

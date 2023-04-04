@@ -1,21 +1,30 @@
 <?php
-namespace App\tests\Serializer\DTO\PropertyListing;
+namespace App\Tests\Serializer\DTO\PropertyListing;
 
 use App\DTO\PropertyAmenity\PropertyAmenityOutput;
 use App\DTO\PropertyListing\PropertyListingOutput;
-use App\Service\Serializer\TransportObjectSerializer;
 use DateTime;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Uid\Uuid;
-use function dd;
+use phpDocumentor\Reflection\DocBlock\Serializer;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
-class PropertyListingOutputSerializationTest extends TestCase
+class PropertyListingOutputSerializationTest extends KernelTestCase
 {
+
+    private $serializer;
+
+    protected function setUp(): void
+    {
+        self::bootKernel();
+        $container = static::getContainer();
+        $this->serializer = $container->get('serializer');
+    }
+
     /** @test */
     public function property_listing_output_dto_serializes_to_json_string_correctly()
     {
-        $correctJson = '{"id":"01870f58-b03e-7318-833d-4efb231e4591","created_at":"2023-03-23","title":"Some title","amenities":[{"id":1,"name":"Amenity 1"},{"id":2,"name":"Amenity 2"}]}';
+        $correctJson = '{"id":1,"created_at":"2023-03-23","title":"Some title","description":"Some description","amenities":[{"id":1,"name":"Amenity 1"},{"id":2,"name":"Amenity 2"}]}';
 
         // Amenity DTOs
         $fooAmenity = new PropertyAmenityOutput();
@@ -29,14 +38,14 @@ class PropertyListingOutputSerializationTest extends TestCase
 
         // Listing DTO
         $dto = new PropertyListingOutput();
-        $dto->id = Uuid::fromString('01870f58-b03e-7318-833d-4efb231e4591');
+        $dto->id = 1;
         $dto->title = 'Some title';
-        $dto->createdAt = DateTime::createFromFormat(TransportObjectSerializer::getDateTimeFormat(), '2023-03-23');
+        $dto->description = 'Some description';
+        $dto->createdAt = DateTime::createFromFormat('Y-m-d', '2023-03-23');
         $dto->amenities = [$fooAmenity, $barAmenity];
 
 
-        $serializer = new TransportObjectSerializer();
-        $json = $serializer->serialize(
+        $json = $this->serializer->serialize(
             $dto,
             'json'
         );

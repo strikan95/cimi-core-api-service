@@ -1,22 +1,28 @@
 <?php
 
-namespace App\tests\Serializer\DTO\PropertyListing;
+namespace App\Tests\Serializer\DTO\PropertyListing;
 
 use App\DTO\PropertyListing\PropertyListingInput;
-use App\Service\Serializer\TransportObjectSerializer;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class PropertyListingInputSerializationTest extends TestCase
+class PropertyListingInputSerializationTest extends KernelTestCase
 {
+    private $serializer;
+
+    protected function setUp(): void
+    {
+        self::bootKernel();
+        $container = static::getContainer();
+        $this->serializer = $container->get('serializer');
+    }
+
     /** @test */
     public function json_string_deserializes_to_property_listing_input_dto_object_correctly()
     {
         $json = '{"title":"Some title","amenities":[1,2]}';
 
-        $serializer = new TransportObjectSerializer();
-
         /** @var PropertyListingInput $dto */
-        $dto = $serializer->deserialize($json, PropertyListingInput::class, 'json');
+        $dto = $this->serializer->deserialize($json, PropertyListingInput::class, 'json');
 
         $this->assertEquals('Some title', $dto->title);
         $this->assertContains(2, $dto->amenities);
