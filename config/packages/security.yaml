@@ -1,18 +1,16 @@
 security:
     providers:
-        my_auth0_provider:
-            id: App\Security\UserProvider
         auth0_provider:
-            id: Auth0\Symfony\Security\UserProvider
+            id: App\Security\UserProvider
 
     firewalls:
         api:
+            security: false
             pattern: ^/api # A pattern example for stateless (token-based authorization) route requests
             stateless: true
-            provider: my_auth0_provider
+            provider: auth0_provider
             custom_authenticators:
                 - auth0.authorizer
-            #custom_authenticator: App\Security\TokenAuthenticator
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
