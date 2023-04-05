@@ -2,9 +2,10 @@
 
 namespace App\DTO\Request\Property;
 
+use App\DTO\DtoResourceInterface;
 use DateTime;
 
-class GetPropertyDto
+class GetPropertyDto implements DtoResourceInterface
 {
     public ?int $id;
     public DateTime $createdAt;

@@ -13,48 +13,27 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class PropertyListingController extends AbstractController
+class PropertyListingController extends AbstractApiController
 {
-    public function __construct
-    (
-        private readonly SerializerInterface $serializer,
-        private readonly ValidatorInterface $validator,
-        private readonly EntityManagerInterface $em,
-        private readonly PropertyListingBuilder $listingBuilder
-    )
-    {
-    }
     #[Route('/api/v1/listings/{id}', name: 'api.listing.get.one', methods: ['GET'])]
-    public function findById(int $id): JsonResponse
+    public function findById(Request $request, int $id): JsonResponse
     {
-        /** @var Property $entity */
-        $entity = $this->em->getRepository(Property::class)->findOneBy(['id' => $id]);
-        if(!$entity)
-        {
-            throw $this->createNotFoundException('Listing not found');
-        }
-
-        $dto = $this->listingBuilder->buildDto($entity);
-        return $this->json($dto);
+        return $this->resolveGetAction($request, $id);
     }
 
     #[Route('/api/v1/listings', name: 'api.listing.add', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $content = $request->getContent();
-        $dto = $this->serializer->deserialize($content, CreatePropertyDto::class, 'json');
+        return $this->resolveCreateAction($request);
+    }
 
-        $errors = $this->validator->validate($dto);
-        if(count($errors) > 0)
-        {
-            //Throw error
-        }
+    protected function getInputDtoClassName(): string
+    {
+        return CreatePropertyDto::class;
+    }
 
-        $entity = $this->listingBuilder->buildEntity($dto);
-
-        $this->em->persist($entity);
-        $this->em->flush();
-
-        return $this->json([], 201, ['Location' => '/listings/'.$entity->getId()]);
+    protected function getEntityClassName(): string
+    {
+        return Property::class;
     }
 }

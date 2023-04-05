@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PropertyRepository::class)]
-class Property
+class Property implements EntityResourceInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

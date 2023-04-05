@@ -2,9 +2,10 @@
 
 namespace App\DTO\Response\Property;
 
+use App\DTO\DtoResourceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreatePropertyDto
+class CreatePropertyDto implements DtoResourceInterface
 {
     #[Assert\NotNull]
     #[Assert\NotBlank]

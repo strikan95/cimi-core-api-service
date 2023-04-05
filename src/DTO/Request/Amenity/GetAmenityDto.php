@@ -2,7 +2,9 @@
 
 namespace App\DTO\Request\Amenity;
 
-class GetAmenityDto
+use App\DTO\DtoResourceInterface;
+
+class GetAmenityDto implements DtoResourceInterface
 {
     public int $id;
     public string $name;

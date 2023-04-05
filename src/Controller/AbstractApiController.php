@@ -9,11 +9,12 @@ use App\Entity\EntityResourceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-abstract class BaseApiController extends AbstractController
+abstract class AbstractApiController extends AbstractController
 {
     public function __construct
     (
@@ -25,7 +26,7 @@ abstract class BaseApiController extends AbstractController
     {
     }
 
-    protected function resolveGetAction(Request $request, int $id): DtoResourceInterface
+    protected function resolveGetAction(Request $request, int $id): JsonResponse
     {
         $entity = $this->em->getRepository($this->getEntityClassName())->findOneBy(['id' => $id]);
 
@@ -36,10 +37,10 @@ abstract class BaseApiController extends AbstractController
 
         $dto = $this->builder->createDtoBuilder($entity)->buildDto();
 
-        return $dto;
+        return $this->json($dto);
     }
 
-    protected function resolveCreateAction(Request $request): EntityResourceInterface
+    protected function resolveCreateAction(Request $request): JsonResponse
     {
         $content = $request->getContent();
         $dto = $this->serializer->deserialize
@@ -58,7 +59,10 @@ abstract class BaseApiController extends AbstractController
 
         $entity = $this->builder->createEntityBuilder($dto)->buildEntity();
 
-        return $entity;
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return $this->json([], 201, ['Location' => '/listings/'.$entity->getId()]);
     }
 
 
