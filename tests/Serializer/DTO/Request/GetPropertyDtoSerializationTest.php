@@ -1,5 +1,5 @@
 <?php
-namespace App\Tests\Serializer\DTO\PropertyListing;
+namespace App\Tests\Serializer\DTO\Request;
 
 use App\DTO\Request\Amenity\GetAmenityDto;
 use App\DTO\Request\Property\GetPropertyDto;
@@ -7,7 +7,7 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 
-class PropertyListingOutputSerializationTest extends KernelTestCase
+class GetPropertyDtoSerializationTest extends KernelTestCase
 {
 
     private $serializer;

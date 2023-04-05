@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Serializer\DTO\PropertyListing;
+namespace App\Tests\Serializer\DTO\Response;
 
 use App\DTO\Response\Property\CreatePropertyDto;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class PropertyListingInputSerializationTest extends KernelTestCase
+class CreatePropertyDtoSerializationTest extends KernelTestCase
 {
     private $serializer;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Serializer\DTO\PropertyAmenity;
+namespace App\Tests\Serializer\DTO\Request;
 
 use App\DTO\Request\Amenity\GetAmenityDto;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class PropertyAmenityOutputSerializationTest extends KernelTestCase
+class GetAmenityDtoSerializationTest extends KernelTestCase
 {
     private $serializer;
 

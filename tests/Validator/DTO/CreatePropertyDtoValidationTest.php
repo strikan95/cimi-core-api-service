@@ -4,7 +4,7 @@ namespace App\Tests\Validator\DTO;
 use App\DTO\Response\Property\CreatePropertyDto;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class PropertyListingInputDtoValidationTest extends KernelTestCase
+class CreatePropertyDtoValidationTest extends KernelTestCase
 {
     /** @test */
     public function test()
