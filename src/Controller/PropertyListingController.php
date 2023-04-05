@@ -2,16 +2,11 @@
 
 namespace App\Controller;
 
-use App\DTO\Builder\PropertyListingBuilder;
 use App\DTO\Response\Property\CreatePropertyDto;
 use App\Entity\Property;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PropertyListingController extends AbstractApiController
 {
@@ -25,6 +20,18 @@ class PropertyListingController extends AbstractApiController
     public function create(Request $request): JsonResponse
     {
         return $this->resolveCreateAction($request);
+    }
+
+    #[Route('/api/v1/listings/{id}', name: 'api.listing.update', methods: ['PUT'])]
+    public function update(Request $request, int $id): JsonResponse
+    {
+        return $this->resolveUpdateAction($request, $id);
+    }
+
+    #[Route('/api/v1/listings/{id}', name: 'api.listing.delete', methods: ['DELETE'])]
+    public function delete(Request $request, int $id): JsonResponse
+    {
+        return $this->resolveDeleteAction($request, $id);
     }
 
     protected function getInputDtoClassName(): string
