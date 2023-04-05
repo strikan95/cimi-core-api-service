@@ -2,31 +2,29 @@
 
 namespace App\DTO\Builder\Property;
 
+use App\DTO\Builder\AbstractEntityBuilder;
 use App\DTO\Builder\EntityBuilderInterface;
-use App\DTO\DtoResourceInterface;
 use App\Entity\Amenity;
 use App\Entity\EntityResourceInterface;
 use App\Entity\Property;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Http\Discovery\Exception\NotFoundException;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
-class PropertyEntityBuilder implements EntityBuilderInterface
+class PropertyEntityBuilder extends AbstractEntityBuilder implements EntityBuilderInterface
 {
-    public function __construct
-    (
-        private readonly EntityManagerInterface $em,
-        private readonly DtoResourceInterface $dto
-    )
+    protected function build(EntityResourceInterface $entity): Property
     {
-    }
-
-    public function buildEntity(): EntityResourceInterface
-    {
-        $entity = new Property();
+        if(!($entity instanceof Property))
+        {
+            throw new \LogicException('Wrong entity class for this builder');
+        }
 
         $entity->setTitle($this->dto->title);
         $entity->setDescription($this->dto->description);
 
+        // Clear amenities for updating else will append
+        $entity->setAmenities(new ArrayCollection());
         foreach ($this->dto->amenities as $amenityId)
         {
             $amenity = $this->em->getRepository(Amenity::class)->findOneBy(['id' => $amenityId]);
@@ -39,5 +37,10 @@ class PropertyEntityBuilder implements EntityBuilderInterface
         }
 
         return $entity;
+    }
+
+    protected function getEntityClassName(): string
+    {
+        return Property::class;
     }
 }
