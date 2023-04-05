@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\PropertyAmenity;
+use App\Entity\Amenity;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -10,11 +10,11 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $fooAmenity = new PropertyAmenity();
+        $fooAmenity = new Amenity();
         $fooAmenity->setName('Wifi');
         $manager->persist($fooAmenity);
 
-        $barAmenity = new PropertyAmenity();
+        $barAmenity = new Amenity();
         $barAmenity->setName('Washing Machine');
         $manager->persist($barAmenity);
 

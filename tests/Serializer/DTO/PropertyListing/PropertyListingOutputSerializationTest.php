@@ -1,12 +1,10 @@
 <?php
 namespace App\Tests\Serializer\DTO\PropertyListing;
 
-use App\DTO\PropertyAmenity\PropertyAmenityOutput;
-use App\DTO\PropertyListing\PropertyListingOutput;
+use App\DTO\Request\Amenity\GetAmenityDto;
+use App\DTO\Request\Property\GetPropertyDto;
 use DateTime;
-use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Serializer\SerializerInterface;
 
 
 class PropertyListingOutputSerializationTest extends KernelTestCase
@@ -27,17 +25,17 @@ class PropertyListingOutputSerializationTest extends KernelTestCase
         $correctJson = '{"id":1,"created_at":"2023-03-23","title":"Some title","description":"Some description","amenities":[{"id":1,"name":"Amenity 1"},{"id":2,"name":"Amenity 2"}]}';
 
         // Amenity DTOs
-        $fooAmenity = new PropertyAmenityOutput();
+        $fooAmenity = new GetAmenityDto();
         $fooAmenity->id = 1;
         $fooAmenity->name = 'Amenity 1';
 
-        $barAmenity = new PropertyAmenityOutput();
+        $barAmenity = new GetAmenityDto();
         $barAmenity->id = 2;
         $barAmenity->name = 'Amenity 2';
 
 
         // Listing DTO
-        $dto = new PropertyListingOutput();
+        $dto = new GetPropertyDto();
         $dto->id = 1;
         $dto->title = 'Some title';
         $dto->description = 'Some description';

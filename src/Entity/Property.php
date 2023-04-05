@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\PropertyListingRepository;
+use App\Repository\PropertyRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PropertyListingRepository::class)]
-class PropertyListing
+#[ORM\Entity(repositoryClass: PropertyRepository::class)]
+class Property
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,7 +25,7 @@ class PropertyListing
     #[ORM\Column(name: "createdAt", type: "datetime")]
     private ?DateTime $createdAt = null;
 
-    #[ORM\ManyToMany(targetEntity: PropertyAmenity::class, inversedBy: 'listings')]
+    #[ORM\ManyToMany(targetEntity: Amenity::class, inversedBy: 'listings')]
     #[ORM\JoinTable(name: 'listings_amenities')]
     private Collection $amenities;
 

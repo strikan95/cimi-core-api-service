@@ -2,7 +2,7 @@
 
 namespace App\Tests\Fixtures;
 
-use App\Entity\PropertyListing;
+use App\Entity\Property;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -18,7 +18,7 @@ class PropertyListingTestFixture extends AbstractFixture implements FixtureInter
 
     public function load(ObjectManager $manager)
     {
-        $fooListing = new PropertyListing();
+        $fooListing = new Property();
         $fooListing->setTitle('foo');
         $fooListing->setDescription('This is foo listing');
         $fooListing->setAmenities(
@@ -29,7 +29,7 @@ class PropertyListingTestFixture extends AbstractFixture implements FixtureInter
         );
         $manager->persist($fooListing);
 
-        $barListing = new PropertyListing();
+        $barListing = new Property();
         $barListing->setTitle('bar');
         $barListing->setDescription('This is bar listing');
         $barListing->setAmenities(
@@ -39,7 +39,7 @@ class PropertyListingTestFixture extends AbstractFixture implements FixtureInter
         );
         $manager->persist($barListing);
 
-        $foobarListing = new PropertyListing();
+        $foobarListing = new Property();
         $foobarListing->setTitle('bar');
         $foobarListing->setDescription('This is foobar listing');
         $foobarListing->setAmenities(new ArrayCollection([]));

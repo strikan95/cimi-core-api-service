@@ -2,11 +2,11 @@
 
 namespace App\DTO\Builder;
 
-use App\DTO\PropertyAmenity\PropertyAmenityOutput;
-use App\DTO\PropertyListing\PropertyListingInput;
-use App\DTO\PropertyListing\PropertyListingOutput;
-use App\Entity\PropertyAmenity;
-use App\Entity\PropertyListing;
+use App\DTO\Request\Amenity\GetAmenityDto;
+use App\DTO\Request\Property\GetPropertyDto;
+use App\DTO\Response\Property\CreatePropertyDto;
+use App\Entity\Amenity;
+use App\Entity\Property;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
@@ -19,9 +19,9 @@ class PropertyListingBuilder
     {
     }
 
-    public function buildDto(PropertyListing $entity)
+    public function buildDto(Property $entity)
     {
-        $dto = new PropertyListingOutput();
+        $dto = new GetPropertyDto();
         $dto->id = $entity->getId();
         $dto->title = $entity->getTitle();
         $dto->description = $entity->getDescription();
@@ -29,7 +29,7 @@ class PropertyListingBuilder
 
         foreach ($entity->getAmenities() as $amenity)
         {
-            $amenityDto = new PropertyAmenityOutput();
+            $amenityDto = new GetAmenityDto();
             $amenityDto->id = $amenity->getId();
             $amenityDto->name = $amenity->getName();
 
@@ -39,16 +39,16 @@ class PropertyListingBuilder
         return $dto;
     }
 
-    public function buildEntity(PropertyListingInput $dto)
+    public function buildEntity(CreatePropertyDto $dto)
     {
-        $entity = new PropertyListing();
+        $entity = new Property();
 
         $entity->setTitle($dto->title);
         $entity->setDescription($dto->description);
 
         foreach ($dto->amenities as $amenityId)
         {
-            $amenity = $this->em->getRepository(PropertyAmenity::class)->findOneBy(['id' => $amenityId]);
+            $amenity = $this->em->getRepository(Amenity::class)->findOneBy(['id' => $amenityId]);
             if(!$amenity)
             {
                 throw new BadRequestException('Amenity with id ' . $amenityId . ' not found');

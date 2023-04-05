@@ -1,10 +1,10 @@
 <?php
-namespace App\DTO\PropertyListing;
+
+namespace App\DTO\Request\Property;
 
 use DateTime;
-use Symfony\Component\Uid\Uuid;
 
-class PropertyListingOutput
+class GetPropertyDto
 {
     public ?int $id;
     public DateTime $createdAt;

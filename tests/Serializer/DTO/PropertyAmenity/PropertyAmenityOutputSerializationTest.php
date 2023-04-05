@@ -2,9 +2,7 @@
 
 namespace App\Tests\Serializer\DTO\PropertyAmenity;
 
-use App\DTO\PropertyAmenity\PropertyAmenityOutput;
-use App\Service\Serializer\TransportObjectSerializer;
-use PHPUnit\Framework\TestCase;
+use App\DTO\Request\Amenity\GetAmenityDto;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PropertyAmenityOutputSerializationTest extends KernelTestCase
@@ -23,7 +21,7 @@ class PropertyAmenityOutputSerializationTest extends KernelTestCase
     {
         $correctJson = '{"id":1,"name":"Test amenity"}';
 
-        $dto = new PropertyAmenityOutput();
+        $dto = new GetAmenityDto();
         $dto->id = 1;
         $dto->name = 'Test amenity';
 

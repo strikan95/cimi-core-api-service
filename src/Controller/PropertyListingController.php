@@ -3,13 +3,9 @@
 namespace App\Controller;
 
 use App\DTO\Builder\PropertyListingBuilder;
-use App\DTO\PropertyListing\PropertyListingInput;
-use App\DTO\PropertyListing\PropertyListingOutput;
-use App\Entity\PropertyAmenity;
-use App\Entity\PropertyListing;
-use App\Repository\PropertyListingRepository;
+use App\DTO\Response\Property\CreatePropertyDto;
+use App\Entity\Property;
 use Doctrine\ORM\EntityManagerInterface;
-use Http\Discovery\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +27,8 @@ class PropertyListingController extends AbstractController
     #[Route('/api/v1/listings/{id}', name: 'api.listing.get.one', methods: ['GET'])]
     public function findById(int $id): JsonResponse
     {
-        /** @var PropertyListing $entity */
-        $entity = $this->em->getRepository(PropertyListing::class)->findOneBy(['id' => $id]);
+        /** @var Property $entity */
+        $entity = $this->em->getRepository(Property::class)->findOneBy(['id' => $id]);
         if(!$entity)
         {
             throw $this->createNotFoundException('Listing not found');
@@ -46,7 +42,7 @@ class PropertyListingController extends AbstractController
     public function create(Request $request): JsonResponse
     {
         $content = $request->getContent();
-        $dto = $this->serializer->deserialize($content, PropertyListingInput::class, 'json');
+        $dto = $this->serializer->deserialize($content, CreatePropertyDto::class, 'json');
 
         $errors = $this->validator->validate($dto);
         if(count($errors) > 0)

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\PropertyListing;
+use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PropertyListing>
+ * @extends ServiceEntityRepository<Property>
  *
- * @method PropertyListing|null find($id, $lockMode = null, $lockVersion = null)
- * @method PropertyListing|null findOneBy(array $criteria, array $orderBy = null)
- * @method PropertyListing[]    findAll()
- * @method PropertyListing[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Property|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Property|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Property[]    findAll()
+ * @method Property[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PropertyListingRepository extends ServiceEntityRepository
+class PropertyRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PropertyListing::class);
+        parent::__construct($registry, Property::class);
     }
 
-    public function save(PropertyListing $entity, bool $flush = false): void
+    public function save(Property $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class PropertyListingRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(PropertyListing $entity, bool $flush = false): void
+    public function remove(Property $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class PropertyListingRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return PropertyListing[] Returns an array of PropertyListing objects
+//     * @return Property[] Returns an array of Property objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class PropertyListingRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?PropertyListing
+//    public function findOneBySomeField($value): ?Property
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

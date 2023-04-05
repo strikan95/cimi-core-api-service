@@ -1,8 +1,7 @@
 <?php
 namespace App\Tests\Validator\DTO;
 
-use App\DTO\PropertyListing\PropertyListingInput;
-use PHPUnit\Framework\TestCase;
+use App\DTO\Response\Property\CreatePropertyDto;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PropertyListingInputDtoValidationTest extends KernelTestCase
@@ -20,7 +19,7 @@ class PropertyListingInputDtoValidationTest extends KernelTestCase
         $validator = $container->get('myvalidator');
 
 
-        $dto = new PropertyListingInput();
+        $dto = new CreatePropertyDto();
         $dto->title = 'Some title';
         $dto->description = 'Some description';
         $dto->amenities = [1, 2];

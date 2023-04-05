@@ -2,7 +2,7 @@
 
 namespace App\Tests\Serializer\DTO\PropertyListing;
 
-use App\DTO\PropertyListing\PropertyListingInput;
+use App\DTO\Response\Property\CreatePropertyDto;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PropertyListingInputSerializationTest extends KernelTestCase
@@ -21,8 +21,8 @@ class PropertyListingInputSerializationTest extends KernelTestCase
     {
         $json = '{"title":"Some title","amenities":[1,2]}';
 
-        /** @var PropertyListingInput $dto */
-        $dto = $this->serializer->deserialize($json, PropertyListingInput::class, 'json');
+        /** @var CreatePropertyDto $dto */
+        $dto = $this->serializer->deserialize($json, CreatePropertyDto::class, 'json');
 
         $this->assertEquals('Some title', $dto->title);
         $this->assertContains(2, $dto->amenities);

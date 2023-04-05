@@ -1,10 +1,10 @@
 <?php
-namespace App\DTO\PropertyListing;
 
-use Doctrine\Common\Collections\ArrayCollection;
+namespace App\DTO\Response\Property;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
-class PropertyListingInput
+class CreatePropertyDto
 {
     #[Assert\NotNull]
     #[Assert\NotBlank]

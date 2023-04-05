@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\PropertyAmenity;
-use App\Entity\PropertyListing;
+use App\Entity\Property;
+use App\Entity\Amenity;
 use App\Tests\BaseApiTestCase;
 use App\Tests\Fixtures\PropertyAmenityTestFixture;
 
@@ -16,8 +16,8 @@ class PropertyListingControllerTest extends BaseApiTestCase
             'title' => 'Test property',
             'description' => 'Test description of a property',
             'amenities' => [
-                $this->fixtureReferences[PropertyAmenity::class][PropertyAmenityTestFixture::WIFI_AMENITY_REFERENCE]->getId(),
-                $this->fixtureReferences[PropertyAmenity::class][PropertyAmenityTestFixture::WASHING_MACHINE_AMENITY_REFERENCE]->getId()
+                $this->fixtureReferences[Amenity::class][PropertyAmenityTestFixture::WIFI_AMENITY_REFERENCE]->getId(),
+                $this->fixtureReferences[Amenity::class][PropertyAmenityTestFixture::WASHING_MACHINE_AMENITY_REFERENCE]->getId()
             ]
         ];
 
@@ -35,7 +35,7 @@ class PropertyListingControllerTest extends BaseApiTestCase
         $this->assertStringStartsWith('/listings', $response->headers->get('Location'));
 
         // Assert that its in the db
-        $entity = $this->entityManager->getRepository(PropertyListing::class)->findOneBy(['id' => 4]);
+        $entity = $this->entityManager->getRepository(Property::class)->findOneBy(['id' => 4]);
         $this->assertNotNull($entity);
     }
 }

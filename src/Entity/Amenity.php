@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PropertyAmenityRepository;
+use App\Repository\AmenityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PropertyAmenityRepository::class)]
-class PropertyAmenity
+#[ORM\Entity(repositoryClass: AmenityRepository::class)]
+class Amenity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,7 +18,7 @@ class PropertyAmenity
     #[ORM\Column(length: 32)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: PropertyListing::class, mappedBy: 'amenities')]
+    #[ORM\ManyToMany(targetEntity: Property::class, mappedBy: 'amenities')]
     private Collection $listings;
 
     public function __construct()

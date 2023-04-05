@@ -2,7 +2,7 @@
 
 namespace App\Tests\Fixtures;
 
-use App\Entity\PropertyAmenity;
+use App\Entity\Amenity;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -16,15 +16,15 @@ class PropertyAmenityTestFixture extends AbstractFixture implements FixtureInter
 
     public function load(ObjectManager $manager)
     {
-        $wifiAmenity = new PropertyAmenity();
+        $wifiAmenity = new Amenity();
         $wifiAmenity->setName('Wifi');
         $manager->persist($wifiAmenity);
 
-        $poolAmenity = new PropertyAmenity();
+        $poolAmenity = new Amenity();
         $poolAmenity->setName('Pool');
         $manager->persist($poolAmenity);
 
-        $washingMachineAmenity = new PropertyAmenity();
+        $washingMachineAmenity = new Amenity();
         $washingMachineAmenity->setName('Washing Machine');
         $manager->persist($washingMachineAmenity);
 
