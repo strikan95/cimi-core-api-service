@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\DTO\Builder\PropertyListingBuilder;
 use App\DTO\PropertyListing\PropertyListingInput;
 use App\DTO\PropertyListing\PropertyListingOutput;
 use App\Entity\PropertyAmenity;
 use App\Entity\PropertyListing;
 use App\Repository\PropertyListingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Http\Discovery\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,8 @@ class PropertyListingController extends AbstractController
     (
         private readonly SerializerInterface $serializer,
         private readonly ValidatorInterface $validator,
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
+        private readonly PropertyListingBuilder $listingBuilder
     )
     {
     }
@@ -30,24 +33,13 @@ class PropertyListingController extends AbstractController
     {
         /** @var PropertyListing $entity */
         $entity = $this->em->getRepository(PropertyListing::class)->findOneBy(['id' => $id]);
-        if ($entity) {
-            $dto = new PropertyListingOutput();
-            $dto->id = $entity->getId();
-            $dto->title = $entity->getTitle();
-            $dto->description = $entity->getDescription();
-            $dto->createdAt = $entity->getCreatedAt();
-
-            foreach ($entity->getAmenities() as $amenity)
-            {
-                $dto->amenities[] = $amenity->getId();
-            }
-
-
-            return $this->json($dto);
-        } else {
-            //throw new PostNotFoundException($id);
-            return $this->json(["error" => "Post was not found by id:" . $id], 404);
+        if(!$entity)
+        {
+            throw $this->createNotFoundException('Listing not found');
         }
+
+        $dto = $this->listingBuilder->buildDto($entity);
+        return $this->json($dto);
     }
 
     #[Route('/api/v1/listings', name: 'api.listing.add', methods: ['POST'])]
@@ -62,15 +54,7 @@ class PropertyListingController extends AbstractController
             //Throw error
         }
 
-        $entity = new PropertyListing();
-        $entity->setTitle($dto->title);
-        $entity->setDescription($dto->description);
-
-        foreach ($dto->amenities as $amenityId)
-        {
-            $amenity = $this->em->getRepository(PropertyAmenity::class)->findOneBy(['id' => $amenityId]);
-            $entity->getAmenities()->add($amenity);
-        }
+        $entity = $this->listingBuilder->buildEntity($dto);
 
         $this->em->persist($entity);
         $this->em->flush();
