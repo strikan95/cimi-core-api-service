@@ -13,6 +13,7 @@ security:
             custom_authenticators:
                 - auth0.authorizer
             #custom_authenticator: App\Security\TokenAuthenticator
+            security: false
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

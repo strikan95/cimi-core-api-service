@@ -2,8 +2,8 @@
 
 namespace App\Security;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\SecurityUser\Entity\User;
+use App\SecurityUser\Repository\UserRepository;
 use Auth0\Symfony\Contracts\Security\AuthorizerInterface;
 use Auth0\Symfony\Security\Authorizer;
 use Auth0\Symfony\Service;

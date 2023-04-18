@@ -1,5 +1,11 @@
-controllers:
+amenity_controller:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Amenity/Controller/
+        namespace: App\Amenity\Controller
+    type: attribute
+
+property_listing_controller:
+    resource:
+        path: ../src/PropertyListing/Controller/
+        namespace: App\PropertyListing\Controller
     type: attribute

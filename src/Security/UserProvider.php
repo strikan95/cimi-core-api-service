@@ -3,7 +3,7 @@
 namespace App\Security;
 
 
-use App\Repository\UserRepository;
+use App\SecurityUser\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 

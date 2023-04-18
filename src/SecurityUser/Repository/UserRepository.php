@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\SecurityUser\Repository;
 
-use App\Entity\User;
+use App\SecurityUser\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

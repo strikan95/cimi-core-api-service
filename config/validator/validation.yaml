@@ -1,0 +1,21 @@
+App\PropertyListing\Dto\PropertyListing:
+  properties:
+    id:
+      - NotNull:    { groups: [ update, patch ] }
+    title:
+      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotNull:    { groups: [ create ] }
+      - Length:     { min: 2, max: 255, groups: [create, update, patch] }
+    description:
+      - NotBlank: { groups: [ create, update, patch ] }
+      - NotNull:    { groups: [ create ] }
+      - Length:     { min: 2, max: 255, groups: [create, update, patch] }
+
+App\Amenity\Dto\Amenity:
+  properties:
+    id:
+      - NotNull:    { groups: [ update, patch ] }
+    name:
+      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotNull:    { groups: [ create ] }
+      - Length:     { min: 2, max: 255, groups: [create, update, patch] }
