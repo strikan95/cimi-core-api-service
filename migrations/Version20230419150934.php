@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230418222633 extends AbstractMigration
+final class Version20230419150934 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,6 +21,7 @@ final class Version20230418222633 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE amenity (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, createdAt DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE api_user (id VARCHAR(255) NOT NULL, auth0_id VARCHAR(255) NOT NULL, roles JSON NOT NULL, UNIQUE INDEX UNIQ_AC64A0BA97E91718 (auth0_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE property_listing (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, createdAt DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE listings_amenities (property_listing_id INT NOT NULL, amenity_id INT NOT NULL, INDEX IDX_5C069F0E61C0BD29 (property_listing_id), INDEX IDX_5C069F0E9F9F1305 (amenity_id), PRIMARY KEY(property_listing_id, amenity_id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE listings_amenities ADD CONSTRAINT FK_5C069F0E61C0BD29 FOREIGN KEY (property_listing_id) REFERENCES property_listing (id) ON DELETE CASCADE');
@@ -33,6 +34,7 @@ final class Version20230418222633 extends AbstractMigration
         $this->addSql('ALTER TABLE listings_amenities DROP FOREIGN KEY FK_5C069F0E61C0BD29');
         $this->addSql('ALTER TABLE listings_amenities DROP FOREIGN KEY FK_5C069F0E9F9F1305');
         $this->addSql('DROP TABLE amenity');
+        $this->addSql('DROP TABLE api_user');
         $this->addSql('DROP TABLE property_listing');
         $this->addSql('DROP TABLE listings_amenities');
     }

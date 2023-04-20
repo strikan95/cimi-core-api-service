@@ -30,9 +30,43 @@ class PropertyListingService
 
     public function store(PropertyListingDTO $dto): PropertyListingEntity
     {
-        $entity = PropertyListingFactory::create($dto);
+        $entity = PropertyListingFactory::build($dto);
         $this->listingRepository->save($entity, true);
 
         return $entity;
+    }
+
+
+    public function update(PropertyListingDTO $dto): PropertyListingEntity
+    {
+        if(null === $dto->getId())
+        {
+            throw new \LogicException('Id not provided');
+        }
+
+        $entity = PropertyListingFactory::build(
+            $dto,
+            $this->getById($dto->getId())
+        );
+        $this->save($entity);
+
+        return $entity;
+    }
+
+    public function delete(int $id): void
+    {
+        $entity = $this->listingRepository->find($id);
+
+        if(null === $entity)
+        {
+            throw new NotFoundHttpException("Listing with id ".$id." couldn't be found.");
+        }
+
+        $this->listingRepository->remove($entity, true);
+    }
+
+    private function save(PropertyListingEntity $listing): void
+    {
+        $this->listingRepository->save($listing, true);
     }
 }

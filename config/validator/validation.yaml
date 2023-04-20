@@ -19,3 +19,11 @@ App\Amenity\Dto\Amenity:
       - NotBlank:   { groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [create, update, patch] }
+
+App\Profile\Landlord\Dto\Landlord:
+  id:
+    - NotNull: { groups: [ update, patch ] }
+  displayName:
+    - NotBlank: { groups: [ create, update, patch ] }
+    - NotNull: { groups: [ create ] }
+    - Length: { min: 2, max: 255, groups: [ create, update, patch ] }

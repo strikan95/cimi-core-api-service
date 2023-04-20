@@ -30,9 +30,30 @@ class AmenityService
 
     public function store(AmenityDto $dto): AmenityEntity
     {
-        $entity = AmenityFactory::create($dto);
-        $this->amenityRepository->save($entity, true);
+        $entity = AmenityFactory::build($dto);
+        $this->save($entity);
 
         return $entity;
+    }
+
+    public function update(AmenityDto $dto): AmenityEntity
+    {
+        if(null === $dto->getId())
+        {
+            throw new \LogicException('Id not provided');
+        }
+
+        $entity =  AmenityFactory::build(
+            $dto,
+            $this->getById($dto->getId())
+        );
+        $this->save($entity);
+
+        return $entity;
+    }
+
+    private function save(AmenityEntity $entity): void
+    {
+        $this->amenityRepository->save($entity, true);
     }
 }

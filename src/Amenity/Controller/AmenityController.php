@@ -21,8 +21,7 @@ class AmenityController extends AbstractController
         private readonly AmenityService $amenityService,
         private readonly SerializerInterface  $serializer,
         private readonly ValidatorInterface $validator,
-    )
-    {
+    ){
     }
 
     #[Route('/api/v1/amenities/{id}', name: 'api.amenities.get', methods: ['GET'])]
@@ -60,5 +59,30 @@ class AmenityController extends AbstractController
         $entity = $this->amenityService->store($dto);
 
         return $this->json([], Response::HTTP_CREATED, ['Location' => '/amenities/' . $entity->getId()]);
+    }
+
+    #[Route('/api/v1/amenities/{id}', name: 'api.amenities.update', methods: ['PUT'])]
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $content = $request->getContent();
+        /** @var AmenityDto $dto */
+        $dto = $this->serializer->deserialize
+        (
+            $content,
+            AmenityDto::class,
+            'json'
+        );
+        $dto->setId($id);
+
+        //Validate
+        $errors = $this->validator->validate($dto, null, ['update']);
+        if(count($errors) > 0)
+        {
+            throw new BadRequestHttpException('Error when validating.');
+        }
+
+        $entity = $this->amenityService->update($dto);
+
+        return $this->json([], Response::HTTP_NO_CONTENT, ['Location' => '/amenities/' . $entity->getId()]);
     }
 }

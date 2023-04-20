@@ -2,16 +2,26 @@
 
 namespace App\PropertyListing\Entity\Factory;
 
+use App\PropertyListing\Dto\PropertyListing as PropertyListingDto;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
 
 class PropertyListingFactory
 {
-    public static function create($dto): PropertyListingEntity
+    public static function build(PropertyListingDto $dto, PropertyListingEntity $listing = null): ?PropertyListingEntity
     {
-        $entity = new PropertyListingEntity();
-        $entity->setTitle($dto->getTitle());
-        $entity->setDescription($dto->getDescription());
+        if(null === $listing)
+        {
+            $listing = new PropertyListingEntity();
+        }
 
-        return $entity;
+        self::loadFromDto($dto, $listing);
+
+        return $listing;
+    }
+
+    private static function loadFromDto(PropertyListingDto $dto, PropertyListingEntity $listing): void
+    {
+        $listing->setTitle($dto->getTitle());
+        $listing->setDescription($dto->getDescription());
     }
 }

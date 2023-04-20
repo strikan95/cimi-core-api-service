@@ -2,54 +2,46 @@
 
 namespace App\SecurityUser\Entity;
 
-use App\SecurityUser\Repository\UserRepository;
+use App\SecurityUser\Repository\SecurityUserRepository;
+use App\Profile\Landlord\Entity\Landlord as LandlordEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface
+#[ORM\Entity(repositoryClass: SecurityUserRepository::class)]
+class SecurityUser implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $authIdentifier = null;
+    #[ORM\Column(unique: true)]
+    private ?string $auth0_id = null;
 
     #[ORM\Column]
     private array $roles = [];
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getAuthIdentifier(): ?string
+    public function getAuth0Id(): ?string
     {
-        return $this->authIdentifier;
+        return $this->auth0_id;
     }
 
-    public function setAuthIdentifier(string $identifier): self
+    public function setAuth0Id(?string $auth0_id): void
     {
-        $this->authIdentifier = $identifier;
-
-        return $this;
+        $this->auth0_id = $auth0_id;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
-        return (string) $this->authIdentifier;
+        return (string) $this->auth0_id;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -66,9 +58,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here

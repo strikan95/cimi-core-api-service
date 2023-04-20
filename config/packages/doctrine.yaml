@@ -23,6 +23,12 @@ doctrine:
                 prefix: 'App\Amenity\Entity'
                 alias: Amenity
 
+            SecurityUser:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/SecurityUser/Entity'
+                prefix: 'App\SecurityUser\Entity'
+                alias: SecurityUser
+
 when@test:
     doctrine:
         dbal:

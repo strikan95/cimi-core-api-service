@@ -4,14 +4,24 @@ namespace App\Amenity\Entity\Factory;
 
 use App\Amenity\Dto\Amenity as AmenityDto;
 use App\Amenity\Entity\Amenity as AmenityEntity;
+use phpDocumentor\Reflection\Types\Self_;
 
 class AmenityFactory
 {
-    public static function create(AmenityDto $dto): AmenityEntity
+    public static function build(AmenityDto $dto, AmenityEntity $amenity = null): ?AmenityEntity
     {
-        $entity = new AmenityEntity();
-        $entity->setName($dto->getName());
+        if(null === $amenity)
+        {
+            $amenity = new AmenityEntity();
+        }
 
-        return $entity;
+        self::loadFromDto($dto, $amenity);
+
+        return $amenity;
+    }
+
+    private static function loadFromDto(AmenityDto $dto, AmenityEntity $amenity): void
+    {
+        $amenity->setName($dto->getName());
     }
 }

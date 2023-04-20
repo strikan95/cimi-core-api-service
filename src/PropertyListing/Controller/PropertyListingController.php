@@ -68,21 +68,36 @@ class PropertyListingController extends AbstractController
         return $this->json([], Response::HTTP_CREATED, ['Location' => '/listings/'.$entity->getId()]);
     }
 
-    #[Route('/api/v1/listings/{id}', name: 'api.listings.patch', methods: ['PUT'])]
-    public function update($id): JsonResponse
+    #[Route('/api/v1/listings/{id}', name: 'api.listings.update', methods: ['PUT'])]
+    public function update(Request $request, int $id): JsonResponse
     {
-        return $this->json([], 200);
-    }
+        $content = $request->getContent();
+        /** @var PropertyListingDTO $dto */
+        $dto = $this->serializer->deserialize
+        (
+            $content,
+            PropertyListingDTO::class,
+            'json'
+        );
+        $dto->setId($id);
 
-    #[Route('/api/v1/listings/{id}', name: 'api.listings.patch', methods: ['PATCH'])]
-    public function patch($id): JsonResponse
-    {
-        return $this->json([], 200);
+        //Validate
+        $errors = $this->validator->validate($dto, null, ['update']);
+        if(count($errors) > 0)
+        {
+            throw new BadRequestHttpException('Error when validating.');
+        }
+
+        $entity = $this->propertyListingService->update($dto);
+
+        return $this->json([], Response::HTTP_NO_CONTENT, ['Location' => '/listings/' . $entity->getId()]);
     }
 
     #[Route('/api/v1/listings/{id}', name: 'api.listings.delete', methods: ['DELETE'])]
     public function delete($id): JsonResponse
     {
-        return $this->json([], 200);
+        $this->propertyListingService->delete($id);
+
+        return $this->json([], Response::HTTP_OK);
     }
 }
