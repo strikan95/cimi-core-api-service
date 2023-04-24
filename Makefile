@@ -7,7 +7,7 @@ COMMAND ?= /bin/sh
 # --------------------------
 
 .PHONY: deploy up build-up build down start stop logs images ps command \
-	command-root shell-root shell restart rm help
+	command-root shell-root shell db-shell restart rm help
 
 deploy:			## Start using Prod Image in Prod Mode
 	${COMPOSE_PREFIX_CMD} docker-compose -f docker-compose.prod.yml up --build -d
@@ -51,6 +51,9 @@ shell-root:			## Enter container shell as root
 
 shell:			## Enter container shell
 	@${COMPOSE_PREFIX_CMD} docker-compose exec app /bin/sh
+
+db-shell:		## Enter database container shell
+	@${COMPOSE_PREFIX_CMD} docker-compose exec db /bin/sh
 
 restart:		## Restart container
 	@${COMPOSE_PREFIX_CMD} docker-compose restart
