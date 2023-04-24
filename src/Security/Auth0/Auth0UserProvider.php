@@ -2,10 +2,10 @@
 
 namespace App\Security\Auth0;
 
-use App\SecurityUser\Entity\SecurityUser as User;
-use App\SecurityUser\Repository\SecurityUserRepository;
 use Auth0\SDK\API\Authentication;
+use Auth0\SDK\API\Management;
 use Auth0\SDK\Configuration\SdkConfiguration;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -23,7 +23,6 @@ class Auth0UserProvider implements UserProviderInterface
         string $auth0Audience,
         string $cookieSecret,
         string $loginCallback,
-        private readonly SecurityUserRepository $userRepository
     ){
         $this->configuration = new SdkConfiguration(
             domain: $auth0Domain,
@@ -39,7 +38,7 @@ class Auth0UserProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user): UserInterface
     {
-        if (!$user instanceof User) {
+        if (!$user instanceof Auth0User) {
             throw new UnsupportedUserException();
         }
 
@@ -48,7 +47,7 @@ class Auth0UserProvider implements UserProviderInterface
 
     public function supportsClass(string $class): bool
     {
-        return User::class === $class;
+        return Auth0User::class === $class;
     }
 
     public function loadUserByIdentifier(string $identifier): UserInterface
@@ -59,56 +58,27 @@ class Auth0UserProvider implements UserProviderInterface
     private function fetchUser(string $identifier): UserInterface
     {
         $userData = json_decode($identifier, true);
+        $userRoles = $this->resolveGetUserRolesAction($userData['user']['sub']);
 
-        $user = $this->userRepository->findByIdentifier($userData['user']['sub']);
-
-        if(null === $user)
-        {
-            $user = $this->storeUser($userData);
-        }
-
-        //retrieve api management token
-        $response = $this->auth0Authentication->clientCredentials();
-        $managementTokenResponse = json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
-
-        //set api management token
-        $this->configuration->setManagementToken($managementTokenResponse->access_token);
-
-        //retrieve roles
-        //$auth0Management = new Management($this->configuration);
-        //$userRoleResponse = $auth0Management->users()->getRoles($userData['user']['sub']);
-        //$userRoles = json_decode($userRoleResponse->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
-
-/*        return new User(
+        return new Auth0User(
             $userData['user']['sub'],
-            $userData['user']['nickname'] ?? null,
-            $userData['user']['email'] ?? null,
-            isset($userData['user']['updated_at']) ? new \DateTimeImmutable($userData['user']['updated_at']) : null,
-            $userData['accessToken'] ?? null,
-            $userData['accessTokenExpired'] ?? null,
-            //$this->roles($userRoles)
-        );*/
-
-        return $user;
+            $userRoles
+        );
     }
 
-    private function storeUser(array $userData): User
+    private function resolveGetUserRolesAction($userIdentifier): array
     {
-        $authId = $userData['user']['sub'];
-
-        $user = new User();
-        $user->setAuth0Id($authId);
-        $user->setRoles(['ROLE_USER']);
-
-        $this->userRepository->save($user, true);
-
-        return $user;
+        $auth0Management = new Management($this->configuration);
+        $userRoleResponse = $auth0Management->users()->getRoles($userIdentifier);
+        return $this->decodeRoleResponse($userRoleResponse);
     }
 
-    private function roles(array $userRoles): array
+    private function decodeRoleResponse(ResponseInterface $response): array
     {
+        $rolesDecoded = json_decode($response->getBody()->getContents(), false, 512, JSON_THROW_ON_ERROR);
+
         $roles = [];
-        foreach ($userRoles as $role) {
+        foreach ($rolesDecoded as $role) {
             $roles[] = $role->name;
         }
 

@@ -4,6 +4,7 @@ namespace App\Security\Auth0;
 
 use Auth0\SDK\Auth0;
 use Auth0\SDK\Configuration\SdkConfiguration;
+use Auth0\SDK\Exception\InvalidTokenException;
 use Auth0\SDK\Token;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,14 +42,13 @@ class Auth0Authenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return
-            null !== $request->get('token') ||
-            (
-                $request->headers->has('Authorization') &&
-                stripos((string) $request->headers->get('Authorization'), 'Bearer ') === 0
-            );
+        return null !== $request->get('token') || ($request->headers->has('Authorization') && stripos((string) $request->headers->get('Authorization'), 'Bearer ') === 0);
     }
 
+    /**
+     * @throws \JsonException
+     * @throws InvalidTokenException
+     */
     public function authenticate(Request $request): Passport
     {
         $token = $this->extractToken($request);
@@ -57,8 +57,6 @@ class Auth0Authenticator extends AbstractAuthenticator
             token: $token,
             tokenType: Token::TYPE_TOKEN
         );
-
-        $bla = $userToken->toArray();
 
         return new SelfValidatingPassport(
             new UserBadge(json_encode(['user' => $userToken->toArray()], JSON_THROW_ON_ERROR))
@@ -70,7 +68,7 @@ class Auth0Authenticator extends AbstractAuthenticator
         return null;
     }
 
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?JsonResponse
     {
         $response = [
             'errors' => [
