@@ -7,7 +7,7 @@ App\PropertyListing\Dto\PropertyListing:
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [create, update, patch] }
     description:
-      - NotBlank: { groups: [ create, update, patch ] }
+      - NotBlank:   { groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [create, update, patch] }
 
@@ -20,10 +20,29 @@ App\Amenity\Dto\Amenity:
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [create, update, patch] }
 
-App\Profile\Landlord\Dto\Landlord:
-  id:
-    - NotNull: { groups: [ update, patch ] }
-  displayName:
-    - NotBlank: { groups: [ create, update, patch ] }
-    - NotNull: { groups: [ create ] }
-    - Length: { min: 2, max: 255, groups: [ create, update, patch ] }
+App\AppUser\Dto\AppUser:
+  constraints:
+      - App\AppUser\Validator\UniqueUser:
+          groups: [create]
+#          appUserRepository: App\AppUser\Repository\AppUserRepository
+#          fields: [userIdentifier, displayName]
+#          groups: [create, update, patch]
+#          message: 'User with this identifier already exists.'
+  properties:
+    id:
+      - NotNull:    { groups: [ update, patch ] }
+    userIdentifier:
+      - NotNull:    { groups: [ create ] }
+      - NotBlank:   { groups: [ create ] }
+    displayName:
+      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotNull:    { groups: [ create ] }
+      - Length:     { min: 2, max: 255, groups: [ create, update, patch ] }
+    firstName:
+      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotNull:    { groups: [ create ] }
+      - Length:     { min: 2, max: 255, groups: [ create, update, patch ] }
+    lastName:
+      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotNull:    { groups: [ create ] }
+      - Length:     { min: 2, max: 255, groups: [ create, update, patch ] }

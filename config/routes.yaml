@@ -10,8 +10,9 @@ property_listing_controller:
         namespace: App\PropertyListing\Controller
     type: attribute
 
-profile_landlord_controller:
+
+app_user_controller:
     resource:
-        path: ../src/Profile/Landlord/Controller/
-        namespace: App\Profile\Landlord\Controller
+        path: ../src/AppUser/Controller/
+        namespace: App\AppUser\Controller
     type: attribute

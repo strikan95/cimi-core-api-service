@@ -23,11 +23,11 @@ doctrine:
                 prefix: 'App\Amenity\Entity'
                 alias: Amenity
 
-            SecurityUser:
+            AppUser:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/SecurityUser/Entity'
-                prefix: 'App\SecurityUser\Entity'
-                alias: SecurityUser
+                dir: '%kernel.project_dir%/src/AppUser/Entity'
+                prefix: 'App\AppUser\Entity'
+                alias: AppUser
 
 when@test:
     doctrine:
