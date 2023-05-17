@@ -14,3 +14,10 @@ security:
             provider: auth0
             custom_authenticators:
                 - App\Security\Auth0\Auth0Authenticator
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/profile/setup, allow_if: "not has_role('ROLE_TENANT') or not has_role('ROLE_LANDLORD')" }
+    # - { path: ^/admin, roles: ROLE_ADMIN }
+    # - { path: ^/profile, roles: ROLE_USER }
