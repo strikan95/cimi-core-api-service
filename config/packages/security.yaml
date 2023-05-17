@@ -18,6 +18,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/profile/setup, allow_if: "not has_role('ROLE_TENANT') or not has_role('ROLE_LANDLORD')" }
+        - { path: ^/profile/setup, allow_if: "not is_granted('ROLE_TENANT') or not is_granted('ROLE_LANDLORD')" }
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
