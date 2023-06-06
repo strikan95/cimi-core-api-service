@@ -2,6 +2,7 @@
 namespace App\PropertyListing\Entity;
 
 use App\Amenity\Entity\Amenity as AmenityEntity;
+use App\AppUser\Entity\AppUser as AppUserEntity;
 use  App\PropertyListing\Repository\PropertyListingRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,6 +22,10 @@ class PropertyListing
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
+
+    #[ORM\ManyToOne(targetEntity: AppUserEntity::class, inversedBy: 'listings')]
+    #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id')]
+    private AppUserEntity|null $owner = null;
 
     #[ORM\ManyToMany(targetEntity: AmenityEntity::class, inversedBy: 'listings')]
     #[ORM\JoinTable(name: 'listings_amenities')]
@@ -82,5 +87,15 @@ class PropertyListing
     public function setAmenities(Collection $amenities): void
     {
         $this->amenities = $amenities;
+    }
+
+    public function getOwner(): AppUserEntity
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(AppUserEntity $owner): void
+    {
+        $this->owner = $owner;
     }
 }

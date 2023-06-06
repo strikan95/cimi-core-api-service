@@ -63,37 +63,18 @@ class AppUserController extends AbstractController
         return $this->json($dto, Response::HTTP_OK, context:$context);
     }
 
-    #[Route('/api/v1/user/setup/tenant', name: 'api.users.register.profile', methods: ['POST'])]
-    public function setUpTenantProfile(Request $request): JsonResponse
-    {
-        $entity = $this->resolveUserProfileSetupAction($request);
-
-        $this->updateUserRoles($this->getUser(), [Roles::ROLE_FULLY_REGISTERED_ID, Roles::ROLE_TENANT_ID]);
-
-        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
-    }
-
-    #[Route('/api/v1/user/setup/landlord', name: 'api.users.register.profile', methods: ['POST'])]
-    public function setUpLandlordProfile(Request $request): JsonResponse
-    {
-        $entity = $this->resolveUserProfileSetupAction($request);
-
-        $this->updateUserRoles($this->getUser(), [Roles::ROLE_FULLY_REGISTERED_ID, Roles::ROLE_LANDLORD_ID]);
-
-        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
-    }
-
-    private function resolveUserProfileSetupAction(Request $request): AppUserEntity
+    #[Route('/api/v1/register', name: 'api.users.register', methods: ['POST'])]
+    public function registerProfile(Request $request): JsonResponse
     {
         $content = $request->getContent();
         /** @var AppUserDto $dto */
+
         $dto = $this->serializer->deserialize
         (
             $content,
             AppUserDto::class,
             'json'
         );
-        $dto->setUserIdentifier($this->getUser()->getUserIdentifier());
 
         //Validate
         $errors = $this->validator->validate($dto, null, ['create']);
@@ -102,7 +83,9 @@ class AppUserController extends AbstractController
             throw new BadRequestHttpException('Error when validating.');
         }
 
-        return $this->appUserService->store($dto);
+        $entity = $this->appUserService->store($dto);
+
+        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
     }
 
     private function updateUserRoles(UserInterface $user, array $roles): void

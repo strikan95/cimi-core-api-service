@@ -3,7 +3,7 @@
 namespace App\tests\Serializer\DTO\PropertyListing;
 
 use App\DTO\PropertyListing\PropertyListingInput;
-use App\Service\Serializer\TransportObjectSerializer;
+use App\Services\Serializer\TransportObjectSerializer;
 use PHPUnit\Framework\TestCase;
 
 class PropertyListingInputSerializationTest extends TestCase

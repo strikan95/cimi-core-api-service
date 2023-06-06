@@ -23,6 +23,7 @@ class AppUserFactory
     private static function loadFromDto(AppUserDto $dto, AppUserEntity $entity): void
     {
         $entity->setDisplayName($dto->getDisplayName());
+        $entity->setEmail($dto->getEmail());
         $entity->setFirstName($dto->getFirstName());
         $entity->setLastName($dto->getLastName());
     }

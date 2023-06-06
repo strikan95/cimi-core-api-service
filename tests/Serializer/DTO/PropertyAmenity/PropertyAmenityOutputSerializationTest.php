@@ -3,7 +3,7 @@
 namespace App\tests\Serializer\DTO\PropertyAmenity;
 
 use App\DTO\PropertyAmenity\PropertyAmenityOutput;
-use App\Service\Serializer\TransportObjectSerializer;
+use App\Services\Serializer\TransportObjectSerializer;
 use PHPUnit\Framework\TestCase;
 
 class PropertyAmenityOutputSerializationTest extends TestCase

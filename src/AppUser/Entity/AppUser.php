@@ -3,8 +3,10 @@
 namespace App\AppUser\Entity;
 
 use App\AppUser\Repository\AppUserRepository;
+use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: AppUserRepository::class)]
 class AppUser
@@ -17,6 +19,9 @@ class AppUser
     #[ORM\Column(unique: true)]
     private ?string $userIdentifier = null;
 
+    #[ORM\Column(unique: true)]
+    private ?string $email = null;
+    
     #[ORM\Column]
     private ?string $displayName = null;
 
@@ -25,6 +30,9 @@ class AppUser
 
     #[ORM\Column]
     private ?string $lastName = null;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: PropertyListingEntity::class)]
+    private Collection $listings;
 
     #[ORM\Column(name: "createdAt", type: "datetime")]
     private ?DateTime $createdAt = null;
@@ -47,6 +55,16 @@ class AppUser
     public function setUserIdentifier(?string $userIdentifier): void
     {
         $this->userIdentifier = $userIdentifier;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
     }
 
     public function getDisplayName(): ?string
@@ -88,5 +106,15 @@ class AppUser
     public function setCreatedAt(?DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getListings(): Collection
+    {
+        return $this->listings;
+    }
+
+    public function setListings(Collection $listings): void
+    {
+        $this->listings = $listings;
     }
 }
