@@ -3,7 +3,7 @@ namespace App\tests\Serializer\DTO\PropertyListing;
 
 use App\DTO\PropertyAmenity\PropertyAmenityOutput;
 use App\DTO\PropertyListing\PropertyListingOutput;
-use App\Service\Serializer\TransportObjectSerializer;
+use App\Services\Serializer\TransportObjectSerializer;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;

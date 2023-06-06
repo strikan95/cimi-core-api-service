@@ -52,8 +52,6 @@ class AppUserController extends AbstractController
     #[Route('/api/v1/user/{id}', name: 'api.users.get.profile.by.id', methods: ['GET'])]
     public function get(int $id): JsonResponse
     {
-        $this->denyAccessUnlessGranted(Roles::ROLE_FULLY_REGISTERED);
-
         $entity = $this->appUserService->getById($id);
 
         $dto = new AppUserDto($entity);
@@ -65,41 +63,18 @@ class AppUserController extends AbstractController
         return $this->json($dto, Response::HTTP_OK, context:$context);
     }
 
-    #[Route('/api/v1/user', name: 'api.users.register.profile', methods: ['POST'])]
-    public function registerUserProfile(Request $request): JsonResponse
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $entity = $this->resolveUserRegisterAction($request);
-
-        $this->updateUserRoles($this->getUser(), [Roles::ROLE_FULLY_REGISTERED_ID]);
-
-        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
-    }
-
-    #[Route('/api/v1/user/landlord', name: 'api.users.register.profile', methods: ['POST'])]
-    public function registerLandlordProfile(Request $request): JsonResponse
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-        $entity = $this->resolveUserRegisterAction($request);
-
-        $this->updateUserRoles($this->getUser(), [Roles::ROLE_FULLY_REGISTERED_ID, Roles::ROLE_LANDLORD_ID]);
-
-        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
-    }
-
-    private function resolveUserRegisterAction(Request $request): AppUserEntity
+    #[Route('/api/v1/register', name: 'api.users.register', methods: ['POST'])]
+    public function registerProfile(Request $request): JsonResponse
     {
         $content = $request->getContent();
         /** @var AppUserDto $dto */
+
         $dto = $this->serializer->deserialize
         (
             $content,
             AppUserDto::class,
             'json'
         );
-        $dto->setUserIdentifier($this->getUser()->getUserIdentifier());
 
         //Validate
         $errors = $this->validator->validate($dto, null, ['create']);
@@ -108,13 +83,15 @@ class AppUserController extends AbstractController
             throw new BadRequestHttpException('Error when validating.');
         }
 
-        return $this->appUserService->store($dto);
+        $entity = $this->appUserService->store($dto);
+
+        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
     }
 
     private function updateUserRoles(UserInterface $user, array $roles): void
     {
         try {
-            $this->auth0ApiManager->addUserRole($this->getUser(), [Roles::ROLE_FULLY_REGISTERED_ID, Roles::ROLE_LANDLORD_ID]);
+            $this->auth0ApiManager->addUserRole($this->getUser(), $roles);
         } catch (ArgumentException $e) {
             throw new \LogicException($e->getMessage());
         } catch (NetworkException $e) {

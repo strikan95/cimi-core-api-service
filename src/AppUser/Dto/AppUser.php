@@ -14,6 +14,9 @@ class AppUser
     #[Groups(['app_user_basic', 'app_user_extended'])]
     protected int $id;
 
+    #[Groups(['app_user_extended'])]
+    protected string $email;
+
     #[Groups(['app_user_basic', 'app_user_extended'])]
     protected string $displayName;
 
@@ -65,6 +68,16 @@ class AppUser
     public function setUserIdentifier(string $userIdentifier): void
     {
         $this->userIdentifier = $userIdentifier;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
     }
 
     public function getDisplayName(): string

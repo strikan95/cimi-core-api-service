@@ -1,10 +1,9 @@
 <?php
 
-namespace App\AppUser\UserProvider;
+namespace App\Security\User;
 
 use App\AppUser\Entity\AppUser as AppUserEntity;
 use App\AppUser\Repository\AppUserRepository;
-use App\Security\Auth0\Auth0User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -21,9 +20,9 @@ final class CurrentUserProvider
         return $this->fromToken($this->tokenStorage->getToken());
     }
 
-    private function fromToken(TokenInterface $token): ?AppUserEntity
+    public function fromToken(TokenInterface $token): ?AppUserEntity
     {
-        if (!$token || !$token->getUser() instanceof Auth0User) {
+        if (!$token || !$token->getUser() instanceof TokenUser) {
             return null;
         }
 

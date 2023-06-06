@@ -10,4 +10,7 @@ class Roles
     public const ROLE_LANDLORD = 'ROLE_LANDLORD';
     public const ROLE_LANDLORD_ID = 'rol_X1leZlew46O2Vz90';
 
+    public const ROLE_TENANT = 'ROLE_TENANT';
+    public const ROLE_TENANT_ID = 'rol_63pYMbeukoLHxcuA';
+
 }

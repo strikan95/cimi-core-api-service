@@ -1,5 +1,5 @@
 <?php
-namespace App\Service\Serializer;
+namespace App\Services\Serializer;
 
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;

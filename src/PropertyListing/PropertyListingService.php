@@ -6,13 +6,15 @@ use App\PropertyListing\Dto\PropertyListing as PropertyListingDTO;
 use App\PropertyListing\Entity\Factory\PropertyListingFactory;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
 use App\PropertyListing\Repository\PropertyListingRepository;
+use App\Security\User\CurrentUserProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PropertyListingService
 {
     public function __construct
     (
-        private readonly PropertyListingRepository $listingRepository
+        private readonly PropertyListingRepository $listingRepository,
+        private readonly CurrentUserProvider $currentUserProvider
     ){
     }
 
@@ -31,11 +33,13 @@ class PropertyListingService
     public function store(PropertyListingDTO $dto): PropertyListingEntity
     {
         $entity = PropertyListingFactory::build($dto);
+        $entity->setOwner(
+            $this->currentUserProvider->get()
+        );
         $this->listingRepository->save($entity, true);
 
         return $entity;
     }
-
 
     public function update(PropertyListingDTO $dto): PropertyListingEntity
     {

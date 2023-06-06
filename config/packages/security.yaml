@@ -1,16 +1,21 @@
 security:
+    enable_authenticator_manager: true
     providers:
-        auth0:
-            id: App\Security\Auth0\Auth0UserProvider
+        token_user_provider:
+            id: App\Security\User\TokenUserProvider
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        api:
-            pattern: ^/api
+        main:
             stateless: true
-            provider: auth0
+            provider: token_user_provider
             custom_authenticators:
-                - App\Security\Auth0\Auth0Authenticator
+                - App\Security\TokenAuthenticator
+
+    access_control:
+        - { path: '^/api/v1/listings/index', roles: 'PUBLIC_ACCESS' }
+        - { path: '^/api/v1/listings', roles: ['ROLE_ADMIN', 'ROLE_LANDLORD'] }
+    #    - { path: ^/profile/setup, allow_if: "not is_granted('ROLE_TENANT') or not is_granted('ROLE_LANDLORD')" }

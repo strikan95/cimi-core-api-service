@@ -2,6 +2,7 @@
 
 namespace App\Security\Auth0;
 
+use App\Security\User\TokenUser;
 use Auth0\SDK\API\Authentication;
 use Auth0\SDK\API\Management;
 use Auth0\SDK\Configuration\SdkConfiguration;
@@ -41,7 +42,7 @@ class Auth0ApiManager
      */
     public function addUserRole(UserInterface $user, array $roles)
     {
-        if(!$user instanceof Auth0User)
+        if(!$user instanceof TokenUser)
         {
             throw new \LogicException('User must be type of Auth0User');
         }
