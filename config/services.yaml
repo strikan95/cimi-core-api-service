@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
+imports:
+    - { resource: 'services/' }
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -30,6 +33,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Services\JWTService:
+        arguments:
+            $audience: '%auth0.audience%'
 
     myvalidator:
         alias: validator

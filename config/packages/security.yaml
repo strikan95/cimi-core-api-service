@@ -1,23 +1,21 @@
 security:
+    enable_authenticator_manager: true
     providers:
-        auth0:
-            id: App\Security\Auth0\Auth0UserProvider
+        token_user_provider:
+            id: App\Security\User\TokenUserProvider
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        api:
-            pattern: ^/api
+        main:
             stateless: true
-            provider: auth0
+            provider: token_user_provider
             custom_authenticators:
-                - App\Security\Auth0\Auth0Authenticator
+                - App\Security\TokenAuthenticator
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/profile/setup, allow_if: "not is_granted('ROLE_TENANT') or not is_granted('ROLE_LANDLORD')" }
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+        - { path: '^/api/v1/listings/index', roles: 'PUBLIC_ACCESS' }
+        - { path: '^/api/v1/listings', roles: ['ROLE_ADMIN', 'ROLE_LANDLORD'] }
+    #    - { path: ^/profile/setup, allow_if: "not is_granted('ROLE_TENANT') or not is_granted('ROLE_LANDLORD')" }
