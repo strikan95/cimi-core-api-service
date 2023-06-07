@@ -6,18 +6,14 @@ use App\AppUser\AppUserService;
 use App\AppUser\Dto\AppUser as AppUserDto;
 use App\AppUser\Entity\AppUser as AppUserEntity;
 use App\AppUser\UserProvider\CurrentUserProvider;
-use App\Security\Auth0\Auth0ApiManager;
+use App\Security\Auth0\UserManager;
 use App\Security\Roles;
-use Auth0\SDK\Exception\ArgumentException;
-use Auth0\SDK\Exception\NetworkException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -29,7 +25,7 @@ class AppUserController extends AbstractController
         private readonly AppUserService $appUserService,
         private readonly SerializerInterface  $serializer,
         private readonly ValidatorInterface $validator,
-        private readonly Auth0ApiManager $auth0ApiManager
+        private readonly UserManager $userManager
     ){
     }
 
@@ -88,14 +84,12 @@ class AppUserController extends AbstractController
         return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
     }
 
-    private function updateUserRoles(UserInterface $user, array $roles): void
+    #[Route('/api/v1/register/test', name: 'api.users.test', methods: ['POST'])]
+    public function test(Request $request): JsonResponse
     {
-        try {
-            $this->auth0ApiManager->addUserRole($this->getUser(), $roles);
-        } catch (ArgumentException $e) {
-            throw new \LogicException($e->getMessage());
-        } catch (NetworkException $e) {
-            throw new HttpException(Response::HTTP_INTERNAL_SERVER_ERROR, $e->getMessage());
-        }
+        $this->userManager->createUser();
+
+
+        return $this->json([], Response::HTTP_CREATED);
     }
 }

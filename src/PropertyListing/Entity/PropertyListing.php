@@ -89,6 +89,22 @@ class PropertyListing
         $this->amenities = $amenities;
     }
 
+    public function addAmenity(AmenityEntity $amenity): self {
+        if (!$this->amenities->contains($amenity)) {
+            $this->amenities[] = $amenity;
+        }
+
+        return $this;
+    }
+
+    public function removeAmenity(AmenityEntity $amenity): self{
+        if ($this->amenities->contains($amenity)) {
+            $this->amenities->removeElement($amenity);
+        }
+
+        return $this;
+    }
+
     public function getOwner(): AppUserEntity
     {
         return $this->owner;
