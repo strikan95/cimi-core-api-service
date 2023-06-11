@@ -23,5 +23,6 @@ class PropertyListingFactory
     {
         $listing->setTitle($dto->getTitle());
         $listing->setDescription($dto->getDescription());
+        $listing->setPrice($dto->getPrice());
     }
 }

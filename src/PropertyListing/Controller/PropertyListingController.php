@@ -5,13 +5,15 @@ namespace App\PropertyListing\Controller;
 use App\PropertyListing\Dto\PropertyListing as PropertyListingDTO;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
 use App\PropertyListing\PropertyListingService;
+use App\PropertyListing\Query\ListingFilter;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -23,14 +25,30 @@ class PropertyListingController extends AbstractController
         private readonly PropertyListingService $propertyListingService,
         private readonly SerializerInterface  $serializer,
         private readonly ValidatorInterface $validator,
+        private readonly EntityManagerInterface $entityManager
     )
     {
     }
 
     #[Route('/api/v1/listings/index', name: 'api.listings.index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return $this->json([], 200);
+        $filter = new ListingFilter($request, $this->entityManager);
+        $filter->apply();
+        $results = $filter->executeQuery();
+
+        $dtos = [];
+        foreach ($results as $result)
+        {
+            $dto = new PropertyListingDTO($result);
+            $dtos[] = $dto;
+        }
+
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups(['listings_extended', 'listings_with_amenities'])
+            ->toArray();
+
+        return $this->json($dtos, 200, context:$context);
     }
 
     #[Route('/api/v1/listings/index/{id}', name: 'api.listings.get', methods: ['GET'])]

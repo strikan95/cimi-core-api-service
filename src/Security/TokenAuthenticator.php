@@ -16,7 +16,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 class TokenAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private readonly JWTServiceInterface $jwtService)
+        private readonly JWTServiceInterface $jwtService
+    )
     {
     }
 

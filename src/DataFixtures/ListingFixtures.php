@@ -10,7 +10,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class ListingFixtures extends BaseFixture implements DependentFixtureInterface
 {
-
     public function getDependencies(): array
     {
         return [
@@ -21,10 +20,11 @@ class ListingFixtures extends BaseFixture implements DependentFixtureInterface
 
     protected function loadData(ObjectManager $manager): void
     {
-        $this->createMany(PropertyListingEntity::class, 1, function (PropertyListingEntity $propertyListing, $count) {
-            $propertyListing->setTitle($this->faker->title);
+        $this->createMany(PropertyListingEntity::class, 200, function (PropertyListingEntity $propertyListing, $count) {
+            $propertyListing->setTitle($this->faker->realText(20));
             $propertyListing->setDescription($this->faker->realText(100));
-            $propertyListing->setOwner($this->referenceRepository->getReference(AppUserEntity::class . '_' . 'landlord'));
+            $propertyListing->setPrice($this->faker->numberBetween(10, 1000));
+            $propertyListing->setOwner($this->getRandomReference(AppUserEntity::class));
 
             for ($i = 0; $i < 4; $i++)
             {

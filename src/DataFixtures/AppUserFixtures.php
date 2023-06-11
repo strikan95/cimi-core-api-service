@@ -10,16 +10,24 @@ class AppUserFixtures extends BaseFixture
 {
     protected function loadData(ObjectManager $manager): void
     {
-        $user = new AppUserEntity();
-        $user->setUserIdentifier('auth0|647ded4bdefe974c4f779009');
-        $user->setEmail('landlord@example.com');
-        $user->setDisplayName($this->faker->userName);
-        $user->setFirstName($this->faker->firstName);
-        $user->setLastName($this->faker->lastName);
+        $this->createMany(AppUserEntity::class, 30, function (AppUserEntity $appUser, $count) {
+            if($count == 0) {
+                $appUser->setUserIdentifier('auth0|647ded4bdefe974c4f779009');
+                $appUser->setRole('ROLE_LANDLORD');
+                $appUser->setEmail('landlord@example.com');
+                $appUser->setDisplayName('landlord');
+                $appUser->setFirstName('Land');
+                $appUser->setLastName('Lord');
+            } else {
+                $appUser->setUserIdentifier($count);
+                $appUser->setRole('ROLE_LANDLORD');
+                $appUser->setEmail($this->faker->email);
+                $appUser->setFirstName($this->faker->firstName);
+                $appUser->setLastName($this->faker->lastName);
+                $appUser->setDisplayName($this->faker->userName);
+            }
+        });
 
-        $this->addReference(AppUserEntity::class . '_' . 'landlord', $user);
-
-        $manager->persist($user);
         $manager->flush();
     }
 }

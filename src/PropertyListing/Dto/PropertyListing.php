@@ -19,6 +19,9 @@ class PropertyListing
     #[Groups(['listings_extended'])]
     protected string $description;
 
+    #[Groups(['listings_basic', 'listings_extended'])]
+    protected int $price;
+
     #[Groups(['listings_with_amenities'])]
     protected array $amenities;
 
@@ -38,6 +41,7 @@ class PropertyListing
         $this->id = $entity->getId();
         $this->title = $entity->getTitle();
         $this->description = $entity->getDescription();
+        $this->price = $entity->getPrice();
         $this->createdAt = $entity->getCreatedAt();
 
         $this->setAmenities($entity->getAmenities());
@@ -94,5 +98,15 @@ class PropertyListing
         {
             $this->amenities[] = new AmenityDto($amenity);
         }
+    }
+
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): void
+    {
+        $this->price = $price;
     }
 }

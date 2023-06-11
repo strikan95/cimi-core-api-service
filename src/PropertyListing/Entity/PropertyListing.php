@@ -23,6 +23,9 @@ class PropertyListing
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[ORM\Column]
+    private ?int $price = null;
+
     #[ORM\ManyToOne(targetEntity: AppUserEntity::class, inversedBy: 'listings')]
     #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id')]
     private AppUserEntity|null $owner = null;
@@ -113,5 +116,15 @@ class PropertyListing
     public function setOwner(AppUserEntity $owner): void
     {
         $this->owner = $owner;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
     }
 }

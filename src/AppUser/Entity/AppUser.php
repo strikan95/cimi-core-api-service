@@ -17,7 +17,9 @@ class AppUser
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
-    private ?string $userIdentifier = null;
+    private ?string $auth0Identifier = null;
+
+    private ?string $role = null;
 
     #[ORM\Column(unique: true)]
     private ?string $email = null;
@@ -49,12 +51,12 @@ class AppUser
 
     public function getUserIdentifier(): ?string
     {
-        return $this->userIdentifier;
+        return $this->auth0Identifier;
     }
 
     public function setUserIdentifier(?string $userIdentifier): void
     {
-        $this->userIdentifier = $userIdentifier;
+        $this->auth0Identifier = $userIdentifier;
     }
 
     public function getEmail(): ?string
@@ -116,5 +118,15 @@ class AppUser
     public function setListings(Collection $listings): void
     {
         $this->listings = $listings;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): void
+    {
+        $this->role = $role;
     }
 }

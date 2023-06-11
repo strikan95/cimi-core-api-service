@@ -39,6 +39,11 @@ class AppUserRepository extends ServiceEntityRepository
         }
     }
 
+    public function getRole($id) {
+        /** @var AppUserEntity $entity */
+        $entity = $this->find($id);
+    }
+
 //    /**
 //     * @return AppUser[] Returns an array of AppUser objects
 //     */
