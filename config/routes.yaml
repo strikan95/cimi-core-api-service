@@ -1,3 +1,9 @@
+university_controller:
+    resource:
+        path: ../src/University/Controller/
+        namespace: App\University\Controller
+    type: attribute
+
 amenity_controller:
     resource:
         path: ../src/Amenity/Controller/
