@@ -48,7 +48,7 @@ class PropertyListingController extends AbstractController
             ->withGroups(['listings_extended', 'listings_with_amenities'])
             ->toArray();
 
-        return $this->json($dtos, 200, context:$context);
+        return $this->json($dtos, Response::HTTP_OK, context:$context);
     }
 
     #[Route('/api/v1/listings/index/{id}', name: 'api.listings.get', methods: ['GET'])]
