@@ -21,6 +21,7 @@ class ListingFixtures extends BaseFixture implements DependentFixtureInterface
     protected function loadData(ObjectManager $manager): void
     {
         $this->createMany(PropertyListingEntity::class, 200, function (PropertyListingEntity $propertyListing, $count) {
+            $propertyListing->setId($count + 1);
             $propertyListing->setTitle($this->faker->realText(20));
             $propertyListing->setDescription($this->faker->realText(100));
             $propertyListing->setPrice($this->faker->numberBetween(10, 1000));

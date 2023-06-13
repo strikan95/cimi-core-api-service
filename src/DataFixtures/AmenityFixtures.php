@@ -21,6 +21,7 @@ class AmenityFixtures extends BaseFixture
     protected function loadData(ObjectManager $manager): void
     {
         $this->createMany(AmenityEntity::class, count(self::$amenityNames), function (AmenityEntity $amenity, $count) {
+            $amenity->setId($count + 1);
             $amenity->setName(self::$amenityNames[$count]);
         });
 

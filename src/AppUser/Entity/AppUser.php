@@ -49,6 +49,11 @@ class AppUser
         return $this->id;
     }
 
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getUserIdentifier(): ?string
     {
         return $this->auth0Identifier;
