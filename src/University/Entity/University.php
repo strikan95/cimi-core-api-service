@@ -23,11 +23,11 @@ class University
     #[ORM\Column(length: 255)]
     private ?string $fullAddress = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $lat = null;
+    #[ORM\Column(precision: 6)]
+    private ?float $lat = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $lon = null;
+    #[ORM\Column(precision: 6)]
+    private ?float $lon = null;
 
     #[ORM\Column(name: "createdAt", type: "datetime")]
     private ?DateTime $createdAt = null;
@@ -37,113 +37,71 @@ class University
         $this->createdAt = new DateTime();
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param int|null $id
-     */
     public function setId(?int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCity(): ?string
     {
         return $this->city;
     }
 
-    /**
-     * @param string|null $city
-     */
     public function setCity(?string $city): void
     {
         $this->city = $city;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFullAddress(): ?string
     {
         return $this->fullAddress;
     }
 
-    /**
-     * @param string|null $fullAddress
-     */
     public function setFullAddress(?string $fullAddress): void
     {
         $this->fullAddress = $fullAddress;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLat(): ?string
+    public function getLat(): ?float
     {
         return $this->lat;
     }
 
-    /**
-     * @param string|null $lat
-     */
-    public function setLat(?string $lat): void
+    public function setLat(?float $lat): void
     {
         $this->lat = $lat;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLon(): ?string
+    public function getLon(): ?float
     {
         return $this->lon;
     }
 
-    /**
-     * @param string|null $lon
-     */
-    public function setLon(?string $lon): void
+    public function setLon(?float $lon): void
     {
         $this->lon = $lon;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime|null $createdAt
-     */
     public function setCreatedAt(?DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;

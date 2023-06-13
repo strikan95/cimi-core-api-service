@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 class University
 {
-    #[Groups(['universities_extended'])]
+    #[Groups(['universities_basic', 'universities_extended'])]
     protected int $id;
 
     #[Groups(['universities_basic', 'universities_extended'])]

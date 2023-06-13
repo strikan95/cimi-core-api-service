@@ -26,6 +26,12 @@ class PropertyListing
     #[ORM\Column]
     private ?int $price = null;
 
+    #[ORM\Column(precision: 6)]
+    private ?float $lat = null;
+
+    #[ORM\Column(precision: 6)]
+    private ?float $lon = null;
+
     #[ORM\ManyToOne(targetEntity: AppUserEntity::class, inversedBy: 'listings')]
     #[ORM\JoinColumn(name: 'owner_id', referencedColumnName: 'id')]
     private AppUserEntity|null $owner = null;
@@ -131,5 +137,26 @@ class PropertyListing
     public function setPrice(?int $price): void
     {
         $this->price = $price;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(?float $lat): void
+    {
+        $this->lat = $lat;
+    }
+
+
+    public function getLon(): ?float
+    {
+        return $this->lon;
+    }
+
+    public function setLon(?float $lon): void
+    {
+        $this->lon = $lon;
     }
 }

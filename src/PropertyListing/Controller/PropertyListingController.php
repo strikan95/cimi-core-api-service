@@ -40,7 +40,7 @@ class PropertyListingController extends AbstractController
         $dtos = [];
         foreach ($results as $result)
         {
-            $dto = new PropertyListingDTO($result);
+            $dto = new PropertyListingDTO(is_array($result) ? $result[0]:$result);
             $dtos[] = $dto;
         }
 
