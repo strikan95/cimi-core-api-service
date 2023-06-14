@@ -16,6 +16,11 @@ property_listing_controller:
         namespace: App\PropertyListing\Controller
     type: attribute
 
+reservation_controller:
+    resource:
+        path: ../src/Reservation/Controller/
+        namespace: App\Reservation\Controller
+    type: attribute
 
 app_user_controller:
     resource:

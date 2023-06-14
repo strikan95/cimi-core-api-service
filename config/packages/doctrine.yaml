@@ -39,6 +39,12 @@ doctrine:
                 prefix: 'App\AppUser\Entity'
                 alias: AppUser
 
+            Reservation:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Reservation/Entity'
+                prefix: 'App\Reservation\Entity'
+                alias: Reservation
+
         dql:
             datetime_functions:
                 addtime: DoctrineExtensions\Query\Mysql\AddTime

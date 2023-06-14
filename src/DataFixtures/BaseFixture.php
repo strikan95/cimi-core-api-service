@@ -16,6 +16,8 @@ abstract class BaseFixture extends Fixture
 
     private array $referencesIndex = [];
 
+    private int $createdCount = 0;
+
     abstract protected function loadData(ObjectManager $manager);
     public function load(ObjectManager $manager): void
     {
@@ -31,14 +33,35 @@ abstract class BaseFixture extends Fixture
             $factory($entity, $i, $data);
             $this->manager->persist($entity);
             // store for usage later as App\Entity\ClassName_#COUNT#
-            $this->addReference($className . '_' . $i, $entity);
+            $this->addReference($className . '_' . $i + $this->createdCount, $entity);
         }
+
+        $this->createdCount += $count;
     }
 
-    /**
-     * @throws Exception
-     */
     protected function getRandomReference(string $className)
+    {
+        $this->loadReferenceIndex($className);
+
+        $randomReferenceKey = $this->faker->randomElement($this->referencesIndex[$className]);
+        return $this->getReference($randomReferenceKey);
+    }
+
+    protected function getReferenceAtIndex(string $className, int $index): object
+    {
+        $this->loadReferenceIndex($className);
+
+        return $this->getReference($this->referencesIndex[$className][$index]);
+    }
+
+    protected function getReferencesCount(string $className)
+    {
+        $this->loadReferenceIndex($className);
+
+        return count($this->referencesIndex[$className]);
+    }
+
+    private function loadReferenceIndex(string $className): void
     {
         if (!isset($this->referencesIndex[$className])) {
             $this->referencesIndex[$className] = [];
@@ -50,8 +73,6 @@ abstract class BaseFixture extends Fixture
         if (empty($this->referencesIndex[$className])) {
             throw new Exception(sprintf('Cannot find any references for class "%s"', $className));
         }
-
-        $randomReferenceKey = $this->faker->randomElement($this->referencesIndex[$className]);
-        return $this->getReference($randomReferenceKey);
     }
+
 }

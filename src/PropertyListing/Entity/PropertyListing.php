@@ -4,6 +4,7 @@ namespace App\PropertyListing\Entity;
 use App\Amenity\Entity\Amenity as AmenityEntity;
 use App\AppUser\Entity\AppUser as AppUserEntity;
 use  App\PropertyListing\Repository\PropertyListingRepository;
+use App\Reservation\Entity\Reservation as ReservationEntity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -40,12 +41,16 @@ class PropertyListing
     #[ORM\JoinTable(name: 'listings_amenities')]
     private Collection $amenities;
 
+    #[ORM\OneToMany(mappedBy: 'listing', targetEntity: ReservationEntity::class)]
+    private Collection $reservations;
+
     #[ORM\Column(name: "createdAt", type: "datetime")]
     private ?DateTime $createdAt = null;
 
     public function __construct()
     {
         $this->amenities = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
         $this->createdAt = new DateTime();
     }
 
@@ -158,5 +163,32 @@ class PropertyListing
     public function setLon(?float $lon): void
     {
         $this->lon = $lon;
+    }
+
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function setReservations(Collection $reservations): void
+    {
+        $this->reservations = $reservations;
+    }
+
+    public function addReservation(ReservationEntity $reservation): self {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations[] = $reservation;
+            $reservation->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(ReservationEntity $reservation): self{
+        if ($this->reservations->contains($reservation)) {
+            $this->reservations->removeElement($reservation);
+        }
+
+        return $this;
     }
 }

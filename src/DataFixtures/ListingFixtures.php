@@ -24,7 +24,7 @@ class ListingFixtures extends BaseFixture implements DependentFixtureInterface
     {
         $ranPoints = $this->generateRandomNPoints(self::OSBB, 200);
 
-        $this->createMany(PropertyListingEntity::class, 500, function (PropertyListingEntity $propertyListing, $count, $ranPoints) {
+        $this->createMany(PropertyListingEntity::class, 100, function (PropertyListingEntity $propertyListing, $count, $ranPoints) {
             $propertyListing->setId($count + 1);
             $propertyListing->setTitle($this->faker->realText(20));
             $propertyListing->setDescription($this->faker->realText(100));
