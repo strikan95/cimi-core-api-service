@@ -6,7 +6,6 @@ use App\PropertyListing\Dto\PropertyListing as PropertyListingDTO;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
 use App\PropertyListing\PropertyListingService;
 use App\PropertyListing\Query\ListingFilter;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,7 +39,7 @@ class PropertyListingController extends AbstractController
         $dtos = [];
         foreach ($results as $result)
         {
-            $dto = new PropertyListingDTO($result);
+            $dto = new PropertyListingDTO(is_array($result) ? $result[0]:$result);
             $dtos[] = $dto;
         }
 
@@ -59,7 +58,7 @@ class PropertyListingController extends AbstractController
         $dto = new PropertyListingDTO($entity);
 
         $context = (new ObjectNormalizerContextBuilder())
-            ->withGroups(['listings_extended', 'listings_with_amenities'])
+            ->withGroups(['listings_extended', 'listings_with_amenities', 'listings_with_reservations'])
             ->toArray();
 
         return $this->json($dto, Response::HTTP_OK, context:$context);

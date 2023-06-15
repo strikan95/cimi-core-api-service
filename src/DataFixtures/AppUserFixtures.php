@@ -15,7 +15,6 @@ class AppUserFixtures extends BaseFixture
                 $appUser->setId($count + 1);
                 $appUser->setUserIdentifier('auth0|647ded4bdefe974c4f779009');
                 $appUser->setRole('ROLE_LANDLORD');
-                $appUser->setEmail('landlord@example.com');
                 $appUser->setDisplayName('landlord');
                 $appUser->setFirstName('Land');
                 $appUser->setLastName('Lord');
@@ -23,7 +22,6 @@ class AppUserFixtures extends BaseFixture
                 $appUser->setId($count + 1);
                 $appUser->setUserIdentifier($count);
                 $appUser->setRole('ROLE_LANDLORD');
-                $appUser->setEmail($this->faker->email);
                 $appUser->setFirstName($this->faker->firstName);
                 $appUser->setLastName($this->faker->lastName);
                 $appUser->setDisplayName($this->faker->userName);

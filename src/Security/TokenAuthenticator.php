@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Security\User\TokenUser;
 use App\Services\JWTServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,24 @@ class TokenAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        if($firewallName !== 'registration')
+        {
+            if(!in_array(TokenUser::FULLY_REGISTERED_ROLE, $token->getRoleNames()))
+            {
+                $response = [
+                    'errors' => [
+                        (object) [
+                            'status' => Response::HTTP_UNAUTHORIZED,
+                            'title' => 'User not fully registered',
+                            'detail' => 'Complete user registration first.'
+                        ]
+                    ]
+                ];
+
+                return new JsonResponse($response, Response::HTTP_UNAUTHORIZED);
+            }
+        }
+
         return null;
     }
 

@@ -14,8 +14,11 @@ class AppUser
     #[Groups(['app_user_basic', 'app_user_extended'])]
     protected int $id;
 
-    #[Groups(['app_user_extended'])]
-    protected string $email;
+/*    #[Groups(['app_user_extended'])]
+    protected string $email;*/
+
+    #[Groups(['app_user_basic', 'app_user_extended'])]
+    protected string $role;
 
     #[Groups(['app_user_basic', 'app_user_extended'])]
     protected string $displayName;
@@ -44,6 +47,7 @@ class AppUser
     {
         $this->id = $entity->getId();
         $this->userIdentifier = $entity->getUserIdentifier();
+        $this->role = $entity->getRole();
         $this->displayName = $entity->getDisplayName();
         $this->firstName = $entity->getFirstName();
         $this->lastName = $entity->getLastName();
@@ -70,7 +74,7 @@ class AppUser
         $this->userIdentifier = $userIdentifier;
     }
 
-    public function getEmail(): string
+/*    public function getEmail(): string
     {
         return $this->email;
     }
@@ -78,7 +82,7 @@ class AppUser
     public function setEmail(string $email): void
     {
         $this->email = $email;
-    }
+    }*/
 
     public function getDisplayName(): string
     {
@@ -118,5 +122,15 @@ class AppUser
     public function setCreatedAt(DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
     }
 }

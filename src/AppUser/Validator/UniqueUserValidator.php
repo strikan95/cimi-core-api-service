@@ -31,7 +31,7 @@ class UniqueUserValidator extends ConstraintValidator
             throw new \LogicException('User identifier is not set.');
         }
 
-        $isUidTaken = !($this->appUserRepository->findOneBy(['userIdentifier' => $userIdentifier]) === null);
+        $isUidTaken = !($this->appUserRepository->findOneBy(['auth0Identifier' => $userIdentifier]) === null);
 
         if(!$isUidTaken)
         {

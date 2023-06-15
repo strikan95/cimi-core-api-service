@@ -4,6 +4,7 @@ namespace App\PropertyListing\Dto;
 
 use App\Amenity\Dto\Amenity as AmenityDto;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
+use App\Reservation\Dto\Reservation as ReservationDto;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,8 +23,17 @@ class PropertyListing
     #[Groups(['listings_basic', 'listings_extended'])]
     protected int $price;
 
+    #[Groups(['listings_basic', 'listings_extended'])]
+    protected string $lat;
+
+    #[Groups(['listings_basic', 'listings_extended'])]
+    protected string $lon;
+
     #[Groups(['listings_with_amenities'])]
     protected array $amenities;
+
+    #[Groups(['listings_with_reservations'])]
+    protected array $reservations;
 
     #[Groups(['listings_extended'])]
     protected DateTime $createdAt;
@@ -42,9 +52,13 @@ class PropertyListing
         $this->title = $entity->getTitle();
         $this->description = $entity->getDescription();
         $this->price = $entity->getPrice();
+        $this->lat = $entity->getLat();
+        $this->lon = $entity->getLon();
+
         $this->createdAt = $entity->getCreatedAt();
 
         $this->setAmenities($entity->getAmenities());
+        $this->setReservations($entity->getReservations());
     }
 
     public function getId(): int
@@ -108,5 +122,38 @@ class PropertyListing
     public function setPrice(int $price): void
     {
         $this->price = $price;
+    }
+
+    public function getLat(): string
+    {
+        return $this->lat;
+    }
+
+    public function setLat(string $lat): void
+    {
+        $this->lat = $lat;
+    }
+
+    public function getLon(): string
+    {
+        return $this->lon;
+    }
+
+    public function setLon(string $lon): void
+    {
+        $this->lon = $lon;
+    }
+
+    public function getReservations(): array
+    {
+        return $this->reservations;
+    }
+
+    public function setReservations(Collection $reservations): void
+    {
+        foreach ($reservations as $reservation)
+        {
+            $this->reservations[] = new ReservationDto($reservation);
+        }
     }
 }
