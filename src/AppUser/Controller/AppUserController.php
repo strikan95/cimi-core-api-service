@@ -8,6 +8,8 @@ use App\AppUser\Entity\AppUser as AppUserEntity;
 use App\AppUser\UserProvider\CurrentUserProvider;
 use App\Security\Auth0\UserManager;
 use App\Security\Roles;
+use Auth0\SDK\Exception\ArgumentException;
+use Auth0\SDK\Exception\NetworkException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,6 +73,7 @@ class AppUserController extends AbstractController
             AppUserDto::class,
             'json'
         );
+        $dto->setUserIdentifier($this->getUser()->getUserIdentifier());
 
         //Validate
         $errors = $this->validator->validate($dto, null, ['create']);
@@ -81,15 +84,26 @@ class AppUserController extends AbstractController
 
         $entity = $this->appUserService->store($dto);
 
-        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
-    }
+        $metaData = [
+            'app_metadata' => [
+                    'local_id' => $entity->getId(),
+                    'role' => $entity->getRole(),
+            ]
+        ];
 
-    #[Route('/api/v1/register/test', name: 'api.users.test', methods: ['POST'])]
-    public function test(Request $request): JsonResponse
-    {
-        $this->userManager->createUser();
+        try {
+            $response = $this->userManager->updateAppMetadata($entity->getUserIdentifier(), $metaData);
+        } catch (ArgumentException|NetworkException $e) {
+            $this->appUserService->delete($entity->getId());
+            throw new BadRequestHttpException('Error while updating user metadata');
+        }
 
+        $dto = new AppUserDto($entity);
 
-        return $this->json([], Response::HTTP_CREATED);
+        $context = (new ObjectNormalizerContextBuilder())
+            ->withGroups(['app_user_extended'])
+            ->toArray();
+
+        return $this->json($dto, Response::HTTP_CREATED, context: $context);
     }
 }

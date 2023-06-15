@@ -9,7 +9,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        registration:
+            pattern: ^/api/v1/register
+            stateless: true
+            provider: token_user_provider
+            custom_authenticators:
+                - App\Security\TokenAuthenticator
+
+        api:
+            pattern: ^/api/v1
             stateless: true
             provider: token_user_provider
             custom_authenticators:

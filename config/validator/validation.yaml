@@ -34,10 +34,14 @@ App\AppUser\Dto\AppUser:
     userIdentifier:
       - NotNull:    { groups: [ create ] }
       - NotBlank:   { groups: [ create ] }
-    email:
+#    email:
+#      - NotBlank: { groups: [ create, update, patch ] }
+#      - NotNull: { groups: [ create ] }
+#      - Length: { min: 2, max: 255, groups: [ create, update, patch ] }
+    role:
       - NotBlank: { groups: [ create, update, patch ] }
       - NotNull: { groups: [ create ] }
-      - Length: { min: 2, max: 255, groups: [ create, update, patch ] }
+
     displayName:
       - NotBlank:   { groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }

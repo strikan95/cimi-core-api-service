@@ -19,10 +19,11 @@ class AppUser
     #[ORM\Column(unique: true)]
     private ?string $auth0Identifier = null;
 
+    #[ORM\Column]
     private ?string $role = null;
 
-    #[ORM\Column(unique: true)]
-    private ?string $email = null;
+/*    #[ORM\Column(unique: true)]
+    private ?string $email = null;*/
     
     #[ORM\Column]
     private ?string $displayName = null;
@@ -64,7 +65,7 @@ class AppUser
         $this->auth0Identifier = $userIdentifier;
     }
 
-    public function getEmail(): ?string
+/*    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -72,7 +73,7 @@ class AppUser
     public function setEmail(?string $email): void
     {
         $this->email = $email;
-    }
+    }*/
 
     public function getDisplayName(): ?string
     {

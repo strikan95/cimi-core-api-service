@@ -7,13 +7,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TokenUser implements UserInterface
 {
-    const ROLE_TOKEN_USER = 'ROLE_TOKEN_USER';
+    const NAMESPACE = 'cimi-core';
+    const AUTH_WITH_TOKEN_ROLE = 'ROLE_TOKEN_USER';
+    const FULLY_REGISTERED_ROLE = 'ROLE_FULLY_REGISTERED';
 
-    private array $tokenData;
-
-    public function __construct(array $tokenData)
+    public function __construct(private readonly array $tokenData)
     {
-        $this->tokenData = $tokenData;
     }
 
     public function getUserIdentifier(): string
@@ -23,9 +22,15 @@ class TokenUser implements UserInterface
 
     public function getRoles(): array
     {
-        $roles = array_merge($this->tokenData['cimi-core/roles'], [self::ROLE_TOKEN_USER]);
+        $response = [];
+        $response[] = self::AUTH_WITH_TOKEN_ROLE;
+        if(isset($this->tokenData[self::NAMESPACE.'/app_metadata']['role']))
+        {
+            $response[] = self::FULLY_REGISTERED_ROLE;
+            $response[] = $this->tokenData[self::NAMESPACE.'/app_metadata']['role'];
+        }
 
-        return $roles;
+        return array_unique(array_values($response));
     }
 
     public function eraseCredentials()

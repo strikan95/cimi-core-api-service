@@ -22,15 +22,6 @@ class ReservationController extends AbstractController
     {
     }
 
-    #[Route('/api/v1/reservations', name: 'app.reservations')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ReservationController.php',
-        ]);
-    }
-
     #[Route('/api/v1/listings/{id}/reservations', name: 'app.listings.reservations', methods: ['GET'])]
     public function getReservationsForAListing(int $id): JsonResponse
     {
