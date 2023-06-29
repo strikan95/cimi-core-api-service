@@ -3,20 +3,32 @@ App\PropertyListing\Dto\PropertyListing:
     id:
       - NotNull:    { groups: [ update, patch ] }
     title:
-      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotBlank:   { allowNull: true, groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [create, update, patch] }
     description:
-      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotBlank:   { allowNull: true, groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [create, update, patch] }
+    lat:
+      - NotBlank: { allowNull: true, groups: [ create, update, patch ] }
+      - NotNull: { groups: [ create ] }
+    lon:
+      - NotBlank: { allowNull: true, groups: [ create, update, patch ] }
+      - NotNull: { groups: [ create ] }
+    amenities:
+      - All:
+          - Type: { type: [ integer ], groups: [ create, update, patch ] }
+          - NotBlank: { allowNull: true, groups: [ create, update, patch ] }
+          - NotNull: { groups: [ create ] }
+          - App\Amenity\Validator\ExistingAmenity: {groups: [create, update, patch]}
 
 App\Amenity\Dto\Amenity:
   properties:
     id:
       - NotNull:    { groups: [ update, patch ] }
     name:
-      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotBlank:   { allowNull: true, groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [create, update, patch] }
 
@@ -39,18 +51,18 @@ App\AppUser\Dto\AppUser:
 #      - NotNull: { groups: [ create ] }
 #      - Length: { min: 2, max: 255, groups: [ create, update, patch ] }
     role:
-      - NotBlank: { groups: [ create, update, patch ] }
+      - NotBlank: { allowNull: true, groups: [ create, update, patch ] }
       - NotNull: { groups: [ create ] }
 
     displayName:
-      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotBlank:   { allowNull: true, groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [ create, update, patch ] }
     firstName:
-      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotBlank:   { allowNull: true, groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [ create, update, patch ] }
     lastName:
-      - NotBlank:   { groups: [ create, update, patch ] }
+      - NotBlank:   { allowNull: true, groups: [ create, update, patch ] }
       - NotNull:    { groups: [ create ] }
       - Length:     { min: 2, max: 255, groups: [ create, update, patch ] }

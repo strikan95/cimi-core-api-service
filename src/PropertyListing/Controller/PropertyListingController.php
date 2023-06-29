@@ -2,10 +2,12 @@
 
 namespace App\PropertyListing\Controller;
 
-use App\PropertyListing\Dto\PropertyListing as PropertyListingDTO;
+use App\PropertyListing\Dto\PropertyListingInputDto;
+use App\PropertyListing\Dto\PropertyListingOutputDto;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
 use App\PropertyListing\PropertyListingService;
 use App\PropertyListing\Query\ListingFilter;
+use App\Security\User\CurrentUserProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,9 +24,7 @@ class PropertyListingController extends AbstractController
     public function __construct
     (
         private readonly PropertyListingService $propertyListingService,
-        private readonly SerializerInterface  $serializer,
-        private readonly ValidatorInterface $validator,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
     )
     {
     }
@@ -39,7 +39,7 @@ class PropertyListingController extends AbstractController
         $dtos = [];
         foreach ($results as $result)
         {
-            $dto = new PropertyListingDTO(is_array($result) ? $result[0]:$result);
+            $dto = new PropertyListingOutputDto(is_array($result) ? $result[0]:$result);
             $dtos[] = $dto;
         }
 
@@ -50,12 +50,10 @@ class PropertyListingController extends AbstractController
         return $this->json($dtos, Response::HTTP_OK, context:$context);
     }
 
-    #[Route('/api/v1/listings/index/{id}', name: 'api.listings.get', methods: ['GET'])]
+    #[Route('/api/v1/listings/{id}', name: 'api.listings.get', methods: ['GET'])]
     public function get(int $id): JsonResponse
     {
-        $entity = $this->propertyListingService->getById($id);
-
-        $dto = new PropertyListingDTO($entity);
+        $dto = $this->propertyListingService->getById($id, true);
 
         $context = (new ObjectNormalizerContextBuilder())
             ->withGroups(['listings_extended', 'listings_with_amenities', 'listings_with_reservations'])
@@ -68,53 +66,15 @@ class PropertyListingController extends AbstractController
     #[Route('/api/v1/listings/create', name: 'api.listings.create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $content = $request->getContent();
-        $dto = $this->serializer->deserialize
-        (
-            $content,
-            PropertyListingDTO::class,
-            'json'
-        );
-
-        //Validate
-        $errors = $this->validator->validate($dto, null, ['create']);
-        if(count($errors) > 0)
-        {
-            throw new BadRequestHttpException('Error when validating.');
-        }
-
-        $entity = $this->propertyListingService->store($dto);
-
+        $entity = $this->propertyListingService->create($request);
         return $this->json([], Response::HTTP_CREATED, ['Location' => '/listings/'.$entity->getId()]);
     }
+
 
     #[Route('/api/v1/listings/{id}/update', name: 'api.listings.update', methods: ['PUT'])]
     public function update(Request $request, int $id): JsonResponse
     {
-        $this->denyAccessUnlessGranted(
-            'update:listing',
-            $this->propertyListingService->getById($id)
-        );
-
-        $content = $request->getContent();
-        /** @var PropertyListingDTO $dto */
-        $dto = $this->serializer->deserialize
-        (
-            $content,
-            PropertyListingDTO::class,
-            'json'
-        );
-        $dto->setId($id);
-
-        //Validate
-        $errors = $this->validator->validate($dto, null, ['update']);
-        if(count($errors) > 0)
-        {
-            throw new BadRequestHttpException('Error when validating.');
-        }
-
-        $entity = $this->propertyListingService->update($dto);
-
+        $entity = $this->propertyListingService->update($id, $request);
         return $this->json([], Response::HTTP_NO_CONTENT, ['Location' => '/listings/' . $entity->getId()]);
     }
 
