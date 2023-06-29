@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class PropertyListingVoter extends Voter
 {
-
     const VIEW = 'view:listing';
     const EDIT = 'update:listing';
 
@@ -38,18 +37,10 @@ class PropertyListingVoter extends Voter
     {
         $user = $this->currentUserProvider->fromToken($token);
 
-        if (!$user instanceof AppUserEntity) {
-            // the user must be logged in; if not, deny access
-            return false;
-        }
-
-        /** @var PropertyListingEntity $post */
-        $propertyListing = $subject;
-
         return match($attribute) {
-            self::VIEW => $this->canView($propertyListing, $user),
-            self::DELETE => $this->canDelete($propertyListing, $user),
-            self::EDIT => $this->canEdit($propertyListing, $user),
+            self::VIEW => $this->canView($subject, $user),
+            self::DELETE => $this->canDelete($subject, $user),
+            self::EDIT => $this->canEdit($subject, $user),
             default => throw new \LogicException('This code should not be reached!')
         };
     }
@@ -57,7 +48,6 @@ class PropertyListingVoter extends Voter
     private function canView(PropertyListingEntity $post, AppUserEntity $user): bool
     {
         return true;
-
         // if they can edit, they can view
 /*        if ($this->canEdit($post, $user)) {
             return true;
@@ -66,8 +56,17 @@ class PropertyListingVoter extends Voter
         return !$post->isPrivate();*/
     }
 
+    private function canEdit(PropertyListingEntity $post, AppUserEntity $user): bool
+    {
+        if(!$this->isLoggedIn($user))
+            return false;
+
+        return $user === $post->getOwner();
+    }
+
     private function canDelete(PropertyListingEntity $post, AppUserEntity $user): bool
     {
+        // If they can edit they can delete
         if ($this->canEdit($post, $user)) {
             return true;
         }
@@ -75,8 +74,13 @@ class PropertyListingVoter extends Voter
         return false;
     }
 
-    private function canEdit(PropertyListingEntity $post, AppUserEntity $user): bool
+    private function isLoggedIn($user): bool
     {
-        return $user === $post->getOwner();
+        if (!$user instanceof AppUserEntity) {
+            // User must have created a profile
+            return false;
+        }
+
+        return true;
     }
 }

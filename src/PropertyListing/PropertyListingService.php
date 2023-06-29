@@ -37,6 +37,9 @@ class PropertyListingService
         if(null === $listing)
             throw new NotFoundHttpException("Listing with id ".$id." couldn't be found.");
 
+        if(!$this->security->isGranted('view:listing', $listing))
+            throw new UnauthorizedHttpException('Error: Unauthorized action');
+
         if($asDto)
             return new PropertyListingOutputDto($listing);
 
@@ -45,9 +48,6 @@ class PropertyListingService
 
     public function create(Request $request): PropertyListingEntity
     {
-/*        if(!$this->security->isGranted('create:listing', PropertyListingEntity::class))
-            throw new UnauthorizedHttpException('Error: Unauthorized action');*/
-
         // Deserialize and validate DTO
         $content = $request->getContent();
         $dto = $this->getValidatedDto(
@@ -74,8 +74,8 @@ class PropertyListingService
         if(null == $listing)
             throw new NotFoundHttpException("Listing with id ".$id." couldn't be found.");
 
-/*        if(!$this->security->isGranted('update:listing', $listing))
-            throw new UnauthorizedHttpException('Error: Unauthorized action');*/
+        if(!$this->security->isGranted('update:listing', $listing))
+            throw new UnauthorizedHttpException('Error: Unauthorized action');
 
         // Deserialize and validate DTO
         $content = $request->getContent();
@@ -95,6 +95,9 @@ class PropertyListingService
         $listing = $this->listingRepository->findById($id);
         if(null === $listing)
             throw new NotFoundHttpException("Listing with id ".$id." couldn't be found.");
+
+        if(!$this->security->isGranted('delete:listing', $listing))
+            throw new UnauthorizedHttpException('Error: Unauthorized action');
 
         $this->dbRemove($listing);
     }
