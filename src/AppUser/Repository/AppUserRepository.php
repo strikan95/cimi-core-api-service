@@ -39,9 +39,14 @@ class AppUserRepository extends ServiceEntityRepository
         }
     }
 
-    public function getRole($id) {
-        /** @var AppUserEntity $entity */
-        $entity = $this->find($id);
+    public function findByAuthIdentifier($identifier): ?AppUserEntity
+    {
+        return $this->findOneBy(['auth0Identifier' => $identifier]);
+    }
+
+    public function findByLocalId($id): ?AppUserEntity
+    {
+        return $this->findOneBy(['id' => $id]);
     }
 
 //    /**

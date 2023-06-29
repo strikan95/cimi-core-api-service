@@ -8,9 +8,11 @@ use App\PropertyListing\Entity\Factory\PropertyListingFactory;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
 use App\PropertyListing\Repository\PropertyListingRepository;
 use App\Security\User\CurrentUserProvider;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -24,75 +26,87 @@ class PropertyListingService
         private readonly PropertyListingFactory $listingFactory,
         private readonly ValidatorInterface $validator,
         private readonly SerializerInterface  $serializer,
+        private readonly Security $security
     ){
     }
 
     public function getById($id, bool $asDto = false): PropertyListingOutputDto|PropertyListingEntity
     {
-        $entity = $this->listingRepository->find($id);
-
-        if(null === $entity)
-        {
+        // Fetch entity
+        $listing = $this->listingRepository->findById($id);
+        if(null === $listing)
             throw new NotFoundHttpException("Listing with id ".$id." couldn't be found.");
-        }
 
         if($asDto)
-            return new PropertyListingOutputDto($entity);
+            return new PropertyListingOutputDto($listing);
 
-        return $entity;
+        return $listing;
     }
 
     public function create(Request $request): PropertyListingEntity
     {
+/*        if(!$this->security->isGranted('create:listing', PropertyListingEntity::class))
+            throw new UnauthorizedHttpException('Error: Unauthorized action');*/
+
+        // Deserialize and validate DTO
+        $content = $request->getContent();
         $dto = $this->getValidatedDto(
-            $request->getContent(),
+            $content,
             ['create'],
             PropertyListingInputDto::class
         );
 
-        $entity = $this->listingFactory->buildOrUpdate(
-            dto: $dto,
-            owner: $this->currentUserProvider->get()
+        // Create new Entity
+        $listing = $this->listingFactory->buildOrUpdate(
+            $dto,
+            null,
+            ['owner' => $this->currentUserProvider->get()]
         );
 
-        $this->save($entity);
-
-        return $entity;
+        $this->dbSave($listing);
+        return $listing;
     }
 
     public function update(int $id, Request $request): PropertyListingEntity
     {
+        // Fetch entity
+        $listing = $this->listingRepository->findById($id);
+        if(null == $listing)
+            throw new NotFoundHttpException("Listing with id ".$id." couldn't be found.");
+
+/*        if(!$this->security->isGranted('update:listing', $listing))
+            throw new UnauthorizedHttpException('Error: Unauthorized action');*/
+
+        // Deserialize and validate DTO
+        $content = $request->getContent();
         $dto = $this->getValidatedDto(
-            $request->getContent(),
-            ['update'],
-            PropertyListingInputDto::class
+            $content, ['update'], PropertyListingInputDto::class
         );
 
-        $entity = $this->listingFactory->buildOrUpdate(
-            $dto,
-            $this->listingRepository->findById($id)
-        );
+        // Update entity
+        $updatedListing = $this->listingFactory->buildOrUpdate($dto, $listing);
 
-        $this->save($entity);
-
-        return $entity;
-    }
-
-    private function save(PropertyListingEntity $listing): void
-    {
-        $this->listingRepository->save($listing, true);
+        $this->dbSave($updatedListing);
+        return $updatedListing;
     }
 
     public function delete(int $id): void
     {
-        $entity = $this->listingRepository->find($id);
-
-        if(null === $entity)
-        {
+        $listing = $this->listingRepository->findById($id);
+        if(null === $listing)
             throw new NotFoundHttpException("Listing with id ".$id." couldn't be found.");
-        }
 
-        $this->listingRepository->remove($entity, true);
+        $this->dbRemove($listing);
+    }
+
+    private function dbSave(PropertyListingEntity $listing): void
+    {
+        $this->listingRepository->save($listing, true);
+    }
+
+    private function dbRemove(PropertyListingEntity $listing): void
+    {
+        $this->listingRepository->remove($listing, true);
     }
 
     private function getValidatedDto(string $rawJson, array $validationGroups,  string $className)

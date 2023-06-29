@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -64,6 +65,7 @@ class PropertyListingController extends AbstractController
 
 
     #[Route('/api/v1/listings/create', name: 'api.listings.create', methods: ['POST'])]
+    #[IsGranted('ROLE_LANDLORD')]
     public function create(Request $request): JsonResponse
     {
         $entity = $this->propertyListingService->create($request);
@@ -72,6 +74,7 @@ class PropertyListingController extends AbstractController
 
 
     #[Route('/api/v1/listings/{id}/update', name: 'api.listings.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_LANDLORD')]
     public function update(Request $request, int $id): JsonResponse
     {
         $entity = $this->propertyListingService->update($id, $request);
@@ -79,6 +82,7 @@ class PropertyListingController extends AbstractController
     }
 
     #[Route('/api/v1/listings/{id}/delete', name: 'api.listings.delete', methods: ['DELETE'])]
+    #[IsGranted('ROLE_LANDLORD')]
     public function delete($id): JsonResponse
     {
         $this->denyAccessUnlessGranted(

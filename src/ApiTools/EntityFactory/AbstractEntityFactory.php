@@ -2,16 +2,21 @@
 
 namespace App\ApiTools\EntityFactory;
 
+use function PHPUnit\Framework\containsEqual;
+
 abstract class AbstractEntityFactory
 {
-    public function buildOrUpdate(object $source, object $target = null, array $context = null): object
+    abstract function getEntityClassName(): string;
+    abstract function onCreatePreLoad($source, mixed $target, array $settings): void;
+
+    public function buildOrUpdate(object $source, object $target = null, mixed $settings = null): object
     {
         if(null == $target)
         {
             $target = new ($this->getEntityClassName())();
-        }
 
-        $this->preLoad($source, $target, $context);
+            $this->onCreatePreLoad($source,  $target, $settings);
+        }
 
         $this->loadFromDto($source, $target);
 
@@ -19,30 +24,36 @@ abstract class AbstractEntityFactory
 
     }
 
-    abstract function getEntityClassName();
-    abstract function preLoad($source, mixed $target, mixed $context);
-
     private function loadFromDto(object $source, object $target): void
     {
         foreach (get_object_vars($source) as $param => $value)
         {
-            if(null == $value) continue;
+            if(null == $value)
+                continue;
 
             $method = 'set'.ucwords($param);
-            if (method_exists($this, $method) && is_callable([$this, $method])) {
+            if ($this->methodExistsAndIsCallable($this, $method)) {
                 $this->$method($value, $target);
-            } else {
-                $this->setValue($param, $value, $target);
+                continue;
             }
+
+            $this->setValue($param, $value, $target);
         }
     }
 
-    private function setValue(mixed $param, object $value, object $target): void
+    private function setValue(string $param, mixed $value, object $target): void
     {
+        // Set parameter if setter exists
         $method = 'set'.ucwords($param);
-
-        if (method_exists($target, $method) && is_callable([$target, $method])) {
+        if ($this->methodExistsAndIsCallable($target, $method))
             $target->$method($value);
-        }
+    }
+
+    private function methodExistsAndIsCallable($object, $method): bool
+    {
+        if (method_exists($object, $method) && is_callable([$object, $method]))
+            return true;
+
+        return false;
     }
 }
