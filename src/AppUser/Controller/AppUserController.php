@@ -31,6 +31,14 @@ class AppUserController extends AbstractController
         return $this->json($dto, Response::HTTP_OK, context:$context);
     }
 
+    #[Route('/api/v1/user/create', name: 'api.users.create.profile', methods: ['POST'])]
+    #[IsGranted('ROLE_TOKEN_USER')]
+    public function createProfile(Request $request): JsonResponse
+    {
+        $entity = $this->appUserService->createProfile($request);
+        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
+    }
+
     #[Route('/api/v1/user/{id}', name: 'api.users.get.profile.by.id', methods: ['GET'])]
     public function get(int $id): JsonResponse
     {
@@ -43,15 +51,8 @@ class AppUserController extends AbstractController
         return $this->json($dto, Response::HTTP_OK, context: $context);
     }
 
-    #[Route('/api/v1/user/create', name: 'api.users.create.profile', methods: ['POST'])]
-    #[IsGranted('ROLE_TOKEN_USER')]
-    public function createProfile(Request $request): JsonResponse
-    {
-        $entity = $this->appUserService->createProfile($request);
-        return $this->json([], Response::HTTP_CREATED, ['Location' => '/user/'.$entity->getId()]);
-    }
-
     #[Route('/api/v1/user/{id}/update', name: 'api.users.update', methods: ['PUT'])]
+    #[IsGranted('ROLE_FULLY_REGISTERED')]
     public function update(int $id, Request $request): JsonResponse
     {
         $appUser = $this->appUserService->update($id, $request);

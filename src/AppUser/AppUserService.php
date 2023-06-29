@@ -15,6 +15,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -97,8 +98,8 @@ class AppUserService
         if(null == $appUser)
             throw new NotFoundHttpException("User with id ".$id." couldn't be found.");
 
-        /*        if(!$this->security->isGranted('update:profile', $appUser))
-                    throw new UnauthorizedHttpException('Error: Unauthorized action');*/
+                if(!$this->security->isGranted('update:profile', $appUser))
+                    throw new UnauthorizedHttpException('Error: Unauthorized action');
 
         // Deserialize and validate DTO
         $content = $request->getContent();
