@@ -38,7 +38,7 @@ class AmenityController extends AbstractController
         return $this->json($dto, Response::HTTP_OK, context:$context);
     }
 
-    #[Route('/api/v1/amenities', name: 'api.amenities.create', methods: ['POST'])]
+/*    #[Route('/api/v1/amenities', name: 'api.amenities.create', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
         $content = $request->getContent();
@@ -65,7 +65,6 @@ class AmenityController extends AbstractController
     public function update(Request $request, int $id): JsonResponse
     {
         $content = $request->getContent();
-        /** @var AmenityDto $dto */
         $dto = $this->serializer->deserialize
         (
             $content,
@@ -84,5 +83,5 @@ class AmenityController extends AbstractController
         $entity = $this->amenityService->update($dto);
 
         return $this->json([], Response::HTTP_NO_CONTENT, ['Location' => '/amenities/' . $entity->getId()]);
-    }
+    }*/
 }

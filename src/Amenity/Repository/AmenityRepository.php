@@ -39,6 +39,11 @@ class AmenityRepository extends ServiceEntityRepository
         }
     }
 
+    public function findById(int $id): ?AmenityEntity
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
 //    /**
 //     * @return Property[] Returns an array of Property objects
 //     */

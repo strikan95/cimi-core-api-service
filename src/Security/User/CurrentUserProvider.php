@@ -26,6 +26,6 @@ final class CurrentUserProvider
             return null;
         }
 
-        return $this->userRepository->findOneBy(['userIdentifier' => $token->getUserIdentifier()]);
+        return $this->userRepository->findByAuthIdentifier($token->getUserIdentifier());
     }
 }

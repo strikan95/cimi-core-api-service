@@ -30,6 +30,10 @@ services:
         arguments:
             $audience: '%auth0.audience%'
 
+#    App\Services\Serializer\TransportObjectSerializer:
+#        alias: serializer
+#        public: true
+
     myvalidator:
         alias: validator
         public: true

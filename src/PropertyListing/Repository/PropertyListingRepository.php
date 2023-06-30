@@ -39,6 +39,11 @@ class PropertyListingRepository extends ServiceEntityRepository
         }
     }
 
+    public function findById($id): ?PropertyListingEntity
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
 //    /**
 //     * @return Property[] Returns an array of Property objects
 //     */

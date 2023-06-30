@@ -2,30 +2,23 @@
 
 namespace App\AppUser\Entity\Factory;
 
+use App\ApiTools\EntityFactory\AbstractEntityFactory;
 use App\AppUser\Dto\AppUser as AppUserDto;
 use App\AppUser\Entity\AppUser as AppUserEntity;
 
-class AppUserFactory
+class AppUserFactory extends AbstractEntityFactory
 {
-    public static function build(AppUserDto $dto, AppUserEntity $entity = null): ?AppUserEntity
+    function getEntityClassName(): string
     {
-        if(null === $entity)
-        {
-            $entity = new AppUserEntity();
-            $entity->setUserIdentifier($dto->getUserIdentifier());
-        }
-
-        self::loadFromDto($dto, $entity);
-
-        return $entity;
+        return AppUserEntity::class;
     }
 
-    private static function loadFromDto(AppUserDto $dto, AppUserEntity $entity): void
+    /** @param AppUserEntity $target */
+    function onCreatePreLoad($source, mixed $target, ?array $settings): void
     {
-        $entity->setDisplayName($dto->getDisplayName());
-        $entity->setRole($dto->getRole());
-        //$entity->setEmail($dto->getEmail());
-        $entity->setFirstName($dto->getFirstName());
-        $entity->setLastName($dto->getLastName());
+        if(!isset($settings['auth0Identifier']))
+            throw new \LogicException('Auth0 identifier must be set');
+
+        $target->setUserIdentifier($settings['auth0Identifier']);
     }
 }
