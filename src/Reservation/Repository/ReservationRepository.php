@@ -39,6 +39,11 @@ class ReservationRepository extends ServiceEntityRepository
         }
     }
 
+    public function findById(int $id): ?Reservation
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
+
 //    /**
 //     * @return Reservation[] Returns an array of Reservation objects
 //     */

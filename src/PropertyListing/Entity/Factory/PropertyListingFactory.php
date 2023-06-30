@@ -23,7 +23,7 @@ class PropertyListingFactory extends AbstractEntityFactory
         return PropertyListing::class;
     }
 
-    function onCreatePreLoad($source, mixed $target, mixed $settings): void
+    function onCreatePreLoad($source, mixed $target, ?array $settings): void
     {
         if(!isset($settings['owner']))
             throw new \LogicException('Owner cannot but null');

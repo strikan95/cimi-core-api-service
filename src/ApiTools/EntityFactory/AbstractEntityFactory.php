@@ -7,9 +7,9 @@ use function PHPUnit\Framework\containsEqual;
 abstract class AbstractEntityFactory
 {
     abstract function getEntityClassName(): string;
-    abstract function onCreatePreLoad($source, mixed $target, array $settings): void;
+    abstract function onCreatePreLoad($source, mixed $target, ?array $settings): void;
 
-    public function buildOrUpdate(object $source, object $target = null, mixed $settings = null): object
+    public function buildOrUpdate(object $source, object $target = null, array $settings = null): object
     {
         if(null == $target)
         {

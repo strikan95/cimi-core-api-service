@@ -41,7 +41,7 @@ class PropertyListing
     #[ORM\JoinTable(name: 'listings_amenities')]
     private Collection $amenities;
 
-    #[ORM\OneToMany(mappedBy: 'listing', targetEntity: ReservationEntity::class)]
+    #[ORM\OneToMany(mappedBy: 'listing', targetEntity: ReservationEntity::class, cascade: ['persist'])]
     private Collection $reservations;
 
     #[ORM\Column(name: "createdAt", type: "datetime")]

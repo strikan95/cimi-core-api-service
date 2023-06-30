@@ -14,7 +14,7 @@ class AppUserFactory extends AbstractEntityFactory
     }
 
     /** @param AppUserEntity $target */
-    function onCreatePreLoad($source, mixed $target, array $settings): void
+    function onCreatePreLoad($source, mixed $target, ?array $settings): void
     {
         if(!isset($settings['auth0Identifier']))
             throw new \LogicException('Auth0 identifier must be set');

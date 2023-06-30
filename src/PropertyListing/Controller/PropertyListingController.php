@@ -63,21 +63,19 @@ class PropertyListingController extends AbstractController
         return $this->json($dto, Response::HTTP_OK, context:$context);
     }
 
-
     #[Route('/api/v1/listings/create', name: 'api.listings.create', methods: ['POST'])]
     #[IsGranted('ROLE_LANDLORD')]
     public function create(Request $request): JsonResponse
     {
-        $entity = $this->propertyListingService->create($request);
+        $entity = $this->propertyListingService->createAndSaveListing($request);
         return $this->json([], Response::HTTP_CREATED, ['Location' => '/listings/'.$entity->getId()]);
     }
-
 
     #[Route('/api/v1/listings/{id}/update', name: 'api.listings.update', methods: ['PUT'])]
     #[IsGranted('ROLE_LANDLORD')]
     public function update(Request $request, int $id): JsonResponse
     {
-        $entity = $this->propertyListingService->update($id, $request);
+        $entity = $this->propertyListingService->updateAndSaveListing($id, $request);
         return $this->json([], Response::HTTP_NO_CONTENT, ['Location' => '/listings/' . $entity->getId()]);
     }
 
@@ -90,7 +88,7 @@ class PropertyListingController extends AbstractController
             $this->propertyListingService->getById($id)
         );
 
-        $this->propertyListingService->delete($id);
+        $this->propertyListingService->deleteListing($id);
 
         return $this->json([], Response::HTTP_OK);
     }
