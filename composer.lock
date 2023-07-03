@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15de8b13031568e3d71b273c27d61e47",
+    "content-hash": "7c13d9b555747f8f61bfd673181575df",
     "packages": [
         {
             "name": "auth0/auth0-php",
@@ -237,6 +237,42 @@
                 "source": "https://github.com/beberlei/DoctrineExtensions/tree/master"
             },
             "time": "2023-02-25T19:57:36+00:00"
+        },
+        {
+            "name": "cimi/chat-bundle",
+            "version": "0.0.1",
+            "dist": {
+                "type": "path",
+                "url": "./bundle/Cimi/ChatBundle",
+                "reference": "93674e625f68e6d676dfa7ccced3c58df4662efc"
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Cimi\\ChatBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Cimi\\ChatBundle\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Juraj Buljevic",
+                    "email": "buljevic.juraj@gmail.com"
+                }
+            ],
+            "description": "Bundle for providing chat capabilities",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "composer/semver",

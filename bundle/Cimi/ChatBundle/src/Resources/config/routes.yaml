@@ -1,0 +1,3 @@
+cimi_chat_bundle.routes:
+  type: annotation
+  resource: '../../Controller'

@@ -4,12 +4,13 @@ namespace App\AppUser\Entity;
 
 use App\AppUser\Repository\AppUserRepository;
 use App\PropertyListing\Entity\PropertyListing as PropertyListingEntity;
+use Cimi\ChatBundle\Entity\ChatUserInterface;
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppUserRepository::class)]
-class AppUser
+class AppUser implements ChatUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

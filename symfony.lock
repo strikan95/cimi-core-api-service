@@ -1,4 +1,7 @@
 {
+    "cimi/chat-bundle": {
+        "version": "0.0.1"
+    },
     "dama/doctrine-test-bundle": {
         "version": "7.2",
         "recipe": {

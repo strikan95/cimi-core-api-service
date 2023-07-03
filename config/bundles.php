@@ -9,4 +9,5 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Auth0\Symfony\Auth0Bundle::class => ['all' => true],
+    Cimi\ChatBundle\CimiChatBundle::class => ['all' => true],
 ];
