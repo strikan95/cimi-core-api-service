@@ -4,6 +4,7 @@ namespace Cimi\ChatBundle\Entity;
 
 use Cimi\ChatBundle\Repository\ConversationRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,16 +16,28 @@ class Conversation
     #[ORM\Column]
     private ?int $id;
 
-    #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'conversations')]
+    #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Participation::class, cascade: ['persist'])]
     private Collection $participants;
 
-    #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class)]
+    #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class, cascade: ['persist'])]
     private Collection $messages;
 
     // private $last_message
 
     #[ORM\Column(name: "created_at", type: "datetime")]
     private ?DateTime $createdAt = null;
+
+    public function __construct(array $participants, Message $initialMessage = null)
+    {
+        $this->participants = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+
+
+        $this->setParticipants($participants);
+        $this->addMessage($initialMessage);
+
+        $this->createdAt = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -41,15 +54,20 @@ class Conversation
         return $this->participants;
     }
 
-    public function setParticipants(Collection $participants): void
+    public function setParticipants(array $participants): void
     {
-        $this->participants = $participants;
+        // Clear then set
+        $this->participants = new ArrayCollection();
+        foreach ($participants as $participant)
+        {
+            $this->addParticipant($participant);
+        }
     }
 
-    public function addParticipants(Participant $participant): void
+    public function addParticipant(Participation $participation): void
     {
-        $participant->addConversation($this);
-        $this->participants[] = $participant;
+        $participation->setConversation($this);
+        $this->participants[] = $participation;
     }
 
     public function getMessages(): Collection
@@ -57,9 +75,14 @@ class Conversation
         return $this->messages;
     }
 
-    public function setMessages(Collection $messages): void
+    public function setMessages(array $messages): void
     {
-        $this->messages = $messages;
+        // Clear then set
+        $this->messages = new ArrayCollection();
+        foreach ($messages as $message)
+        {
+            $this->addMessage($message);
+        }
     }
 
     public function addMessage(Message $message): void

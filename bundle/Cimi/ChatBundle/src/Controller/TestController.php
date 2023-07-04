@@ -17,13 +17,19 @@ class TestController extends AbstractController
     {
     }
 
-    #[Route('/chat', name: 'cimi_chat_bundle', methods: ['POST'])]
-    public function index(Request $request): JsonResponse
+    #[Route('/api/v1/chat', name: 'cimi_chat_bundle', methods: ['POST'])]
+    public function chat(Request $request): JsonResponse
     {
-        $content = $request->getContent();
-        $data = json_decode($content);
+        $conversation = $this->chatService->startChat($request);
 
+        return $this->json(['id' => $conversation->getId()], Response::HTTP_CREATED);
+    }
 
-        return $this->json(['message' => 'hello'], Response::HTTP_OK);
+    #[Route('/api/v1/conversation/{id}', name: 'cimi_chat_bundle.send.message', methods: ['POST'])]
+    public function send(int $id, Request $request): JsonResponse
+    {
+        $conversation = $this->chatService->sendMessage($id, $request);
+
+        return $this->json(['id' => $conversation->getId()], Response::HTTP_CREATED);
     }
 }

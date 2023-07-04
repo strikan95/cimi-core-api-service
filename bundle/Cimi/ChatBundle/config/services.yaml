@@ -1,0 +1,24 @@
+parameters:
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Cimi\ChatBundle\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Entity/'
+
+  cimi_chat.user_provider_service:
+    class: Cimi\ChatBundle\ChatUserProvider\ChatUserProviderService
+
+  Cimi\ChatBundle\ChatUserProvider\ChatUserProviderService:
+    alias: cimi_chat.user_provider_service
+
+#  cimi_chat.chat_service:
+#    class: Cimi\ChatBundle\Services\ChatService
+
+#  Cimi\ChatBundle\Services\ChatService:
+#    alias: cimi_chat.chat_service

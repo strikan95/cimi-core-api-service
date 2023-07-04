@@ -39,4 +39,9 @@ class ConversationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findById(int $id): ?Conversation
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
 }

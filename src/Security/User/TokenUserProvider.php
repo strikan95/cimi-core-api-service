@@ -2,6 +2,7 @@
 
 namespace App\Security\User;
 
+use App\AppUser\Repository\AppUserRepository;
 use App\Services\JWTServiceInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -9,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class TokenUserProvider implements UserProviderInterface
 {
     public function __construct(
-        private readonly JWTServiceInterface $JWTService
+        private readonly JWTServiceInterface $JWTService,
     )
     {
     }

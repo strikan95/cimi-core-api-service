@@ -1,0 +1,2 @@
+cimi_chat:
+    chat_user_provider: App\Chat\ChatUserProvider

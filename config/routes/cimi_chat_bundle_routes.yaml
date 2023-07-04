@@ -1,2 +1,0 @@
-cimi_chat_bundle_routes:
-  resource: '@CimiChatBundle/Resources/config/routes.yaml'

@@ -17,9 +17,9 @@ class Message
     #[ORM\Column]
     private ?string $body;
 
-    #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity: Participation::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(name: 'sender_id', referencedColumnName: 'id')]
-    private Participant $sender;
+    private Participation $sender;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(name: 'conversation_id', referencedColumnName: 'id')]
@@ -28,10 +28,21 @@ class Message
     #[ORM\Column(name: "created_at", type: "datetime")]
     private ?DateTime $createdAt;
 
-    public function __construct()
+    public function __construct(string $body, Participation $sender)
     {
+        $this->body = $body;
+        $this->sender = $sender;
+
         $this->createdAt = new DateTime();
     }
+
+    /*    public function __construct(string $body, Participation $sender, Conversation $conversation = null)
+        {
+            $this->body = $body;
+            $this->sender = $sender;
+            $this->conversation = $conversation;
+            $this->createdAt = new DateTime();
+        }*/
 
     public function getId(): ?int
     {
@@ -53,12 +64,12 @@ class Message
         $this->body = $body;
     }
 
-    public function getSender(): Participant
+    public function getSender(): Participation
     {
         return $this->sender;
     }
 
-    public function setSender(Participant $sender): void
+    public function setSender(Participation $sender): void
     {
         $this->sender = $sender;
     }
