@@ -3,6 +3,7 @@
 namespace Cimi\ChatBundle\Repository;
 
 use Cimi\ChatBundle\Entity\ChatUserInterface;
+use Cimi\ChatBundle\Entity\Conversation;
 use Cimi\ChatBundle\Entity\Participation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,17 +42,20 @@ class ParticipantRepository extends ServiceEntityRepository
         }
     }
 
-    public function findWithUserId(int $userId): ?Participation
-    {
-        return $this->findOneBy(['user' => $userId]);
-    }
-
-    public function findByUser(ChatUserInterface $chatUser): ?Participation
+    public function findIfIsParticipant(Conversation $conversation, ChatUserInterface $chatUser): ?Participation
     {
         return $this->findOneBy(
             [
-                'user' => $chatUser->getId()
+                'user' => $chatUser->getId(),
+                'conversation' => $conversation->GetId()
             ]
+        );
+    }
+
+    public function getAllParticipations(ChatUserInterface $user): array
+    {
+        return $this->findBy(
+            ['user' => $user->getId()]
         );
     }
 }

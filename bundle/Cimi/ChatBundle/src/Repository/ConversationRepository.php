@@ -2,6 +2,7 @@
 
 namespace Cimi\ChatBundle\Repository;
 
+use Cimi\ChatBundle\Entity\ChatUserInterface;
 use Cimi\ChatBundle\Entity\Conversation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,5 +44,18 @@ class ConversationRepository extends ServiceEntityRepository
     public function findById(int $id): ?Conversation
     {
         return $this->findOneBy(['id' => $id]);
+    }
+
+    public function getAllUsersConversations(int $id)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder('c')
+            ->select('c')
+            ->from(Conversation::class, 'c')
+            ->innerJoin('c.participants', 'p')
+            ->andWhere('p.user = :userId')
+            ->setParameter('userId', $id)
+            ->getQuery();
+
+        return $query->getResult();
     }
 }

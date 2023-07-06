@@ -39,4 +39,9 @@ class MessageRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findById(int $id): ?Message
+    {
+        return $this->findOneBy(['id' => $id]);
+    }
 }

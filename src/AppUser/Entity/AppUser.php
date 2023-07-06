@@ -136,4 +136,9 @@ class AppUser implements ChatUserInterface
     {
         $this->role = $role;
     }
+
+    public function getName(): ?string
+    {
+        return $this->firstName . $this->lastName;
+    }
 }

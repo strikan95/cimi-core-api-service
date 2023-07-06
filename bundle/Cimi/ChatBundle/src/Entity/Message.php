@@ -5,6 +5,9 @@ namespace Cimi\ChatBundle\Entity;
 use Cimi\ChatBundle\Repository\MessageRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
@@ -12,13 +15,16 @@ class Message
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('conversation_with_messages')]
     private ?int $id;
 
     #[ORM\Column]
+    #[Groups('conversation_with_messages')]
     private ?string $body;
 
     #[ORM\ManyToOne(targetEntity: Participation::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(name: 'sender_id', referencedColumnName: 'id')]
+    #[Groups('conversation_with_messages')]
     private Participation $sender;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
@@ -28,10 +34,11 @@ class Message
     #[ORM\Column(name: "created_at", type: "datetime")]
     private ?DateTime $createdAt;
 
-    public function __construct(string $body, Participation $sender)
+    public function __construct(Conversation $conversation, Participation $participant, string $body)
     {
+        $this->conversation = $conversation;
+        $this->sender = $participant;
         $this->body = $body;
-        $this->sender = $sender;
 
         $this->createdAt = new DateTime();
     }
